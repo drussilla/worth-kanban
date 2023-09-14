@@ -1,0 +1,65 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using KanbanBoard.Shared
+
+@attribute [Authorize]
+@inject HttpClient Http
+
+<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">KanbanBoard</a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>
+
+@if (boards == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
+        <nav class="flex-column">
+            @foreach (var board in boards)
+            {
+                var link = $"board/{board.Id}";
+                <div class="nav-item px-3">
+
+                    <NavLink class="nav-link" href="@link" Match="NavLinkMatch.All">
+                    <span class="oi oi-home" aria-hidden="true"></span> @board.Name
+                    </NavLink>
+                </div>
+            }
+        </nav>
+        
+    </div>
+}
+
+
+
+@code {
+    private BoardDto[]? boards = null;
+
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            this.boards = await Http.GetFromJsonAsync<BoardDto[]>("Board");
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+    }
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}

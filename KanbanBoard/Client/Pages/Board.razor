@@ -1,0 +1,41 @@
+﻿@page "/board/{id:guid}"
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using KanbanBoard.Shared
+@inject HttpClient Http
+
+<PageTitle>Board @board?.Name</PageTitle>
+
+<h1>Board @board?.Name</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+@if (tasks != null)
+{
+    @foreach (var task in tasks)
+    {
+        <h3>@task.Title</h3>
+    }
+}
+
+@code {
+
+    private BoardDto? board { get; set; }
+    private TaskDto[]? tasks { get; set; }
+
+    [Parameter]
+    public Guid Id { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            board = await Http.GetFromJsonAsync<BoardDto>($"board/{Id}");
+            tasks = await Http.GetFromJsonAsync<TaskDto[]>($"board/{Id}/task");
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+    }
+}
