@@ -10,10 +10,9 @@
             <h6 class="card-title text-uppercase text-truncate py-2">@Stage?.Name</h6>
             @if (Stage != null)
             {
-                foreach(var task in Stage.Tasks.Values)
-                {
-                    <TaskComponent TaskId="@task.Id" StageId="@StageId" />
-                }
+                <Dropzone Items="Stage.Tasks.Values.ToList()" OnItemDrop="@((TaskState arg) => OnItemDrop(arg))">
+                    <TaskComponent TaskId="@context.Id" StageId="@StageId" />
+                </Dropzone>
             }
 
             <button class="btn btn-info" @onclick="AddTask">Add Task</button>
@@ -36,9 +35,14 @@
 
     }
 
-    public void AddTask()
+    private void AddTask()
     {
         Dispatcher.Dispatch(new AddTaskAction(StageId));
+    }
+
+    private void OnItemDrop(TaskState item)
+    {
+        Dispatcher.Dispatch(new MoveTaskAction(item.Id, StageId));
     }
 
     private StageState? Stage => State.Value.GetSelectedBoard?.GetStageState(StageId);

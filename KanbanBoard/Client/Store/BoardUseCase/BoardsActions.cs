@@ -9,4 +9,6 @@ namespace KanbanBoard.Client.Store.BoardUseCase
     public record SelectBoardAction(Guid Id);
     
     public record AddTaskAction(Guid stageId);
+
+    public record MoveTaskAction(Guid taskId, Guid newStageId);
 }

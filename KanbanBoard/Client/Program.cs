@@ -4,6 +4,7 @@ using KanbanBoard.Client.Services;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Plk.Blazor.DragDrop;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -17,9 +18,14 @@ builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().Cre
 
 builder.Services.AddApiAuthorization();
 
+// Flux/Redux pattern
 var currentAssembly = typeof(Program).Assembly;
 builder.Services.AddFluxor(options => options.ScanAssemblies(currentAssembly));
 
+// Drag and Drop
+builder.Services.AddBlazorDragDrop();
+
+// Local services
 builder.Services.AddScoped<IBoardService, BoardsService>();
 
 await builder.Build().RunAsync();
