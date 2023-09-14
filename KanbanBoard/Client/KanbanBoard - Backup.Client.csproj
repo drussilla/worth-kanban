@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Store\StageUseCase\" />
+    <Folder Include="NewFolder\" />
   </ItemGroup>
 
 </Project>

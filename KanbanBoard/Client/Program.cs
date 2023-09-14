@@ -1,4 +1,6 @@
+using Fluxor;
 using KanbanBoard.Client;
+using KanbanBoard.Client.Services;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -14,5 +16,10 @@ builder.Services.AddHttpClient("KanbanBoard.ServerAPI", client => client.BaseAdd
 builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("KanbanBoard.ServerAPI"));
 
 builder.Services.AddApiAuthorization();
+
+var currentAssembly = typeof(Program).Assembly;
+builder.Services.AddFluxor(options => options.ScanAssemblies(currentAssembly));
+
+builder.Services.AddScoped<IBoardService, BoardsService>();
 
 await builder.Build().RunAsync();

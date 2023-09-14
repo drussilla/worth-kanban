@@ -24,13 +24,19 @@ namespace KanbanBoard.Server.Repositories
         public Task<List<Board>> GetAsync(CancellationToken token)
         {
             _logger.LogDebug("Getting all boards");
-            return _context.Boards.ToListAsync(token);
+            return _context
+                .Boards
+                .Include(x => x.Stages)
+                .ThenInclude(x => x.Tasks)
+                .ToListAsync(token);
         }
 
         public Task<Board> GetAsync(Guid id, CancellationToken token)
         {
             _logger.LogDebug($"Getting board with id: {id}");
-            return _context.Boards.FirstAsync(x => x.Id == id, token);
+            return _context
+                .Boards
+                .FirstAsync(x => x.Id == id, token);
         }
     }
 }

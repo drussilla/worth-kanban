@@ -1,0 +1,33 @@
+﻿@using Fluxor;
+@using KanbanBoard.Client.Store.BoardUseCase;
+@using KanbanBoard.Shared;
+
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+<div class="border border-light py-2">
+    <div class="card draggable shadow-sm">
+        <div class="card-body p-2">
+            <div class="card-title">
+                <a href="" class="lead font-weight-light">@Task?.Title</a>
+            </div>
+            <p>
+                @Task?.Description
+            </p>
+            <button class="btn btn-danger btn-sm">Delete</button>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public Guid TaskId { get; set; }
+    
+    [Parameter]
+    public Guid StageId { get; set; }
+
+    [Inject]
+    public IState<BoardsState> State { get; set; }
+
+    private TaskState Task => State.Value.GetSelectedBoard?.Stages[StageId].Tasks[TaskId];
+
+}

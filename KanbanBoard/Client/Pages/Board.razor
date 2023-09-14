@@ -1,41 +1,48 @@
 ﻿@page "/board/{id:guid}"
+@using Fluxor;
+@using KanbanBoard.Client.Store.BoardUseCase;
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using KanbanBoard.Shared
+@using KanbanBoard.Client.Components
 @inject HttpClient Http
 
-<PageTitle>Board @board?.Name</PageTitle>
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
-<h1>Board @board?.Name</h1>
+<PageTitle>@BoardName</PageTitle>
 
-<p>This component demonstrates fetching data from the server.</p>
+<h1>@BoardName</h1>
 
-@if (tasks != null)
-{
-    @foreach (var task in tasks)
+<div class="stage-container">
+
+    @if (State.Value.SelectedBoard != null)
     {
-        <h3>@task.Title</h3>
+        <div class="stage-wrapper row flex-row flex-sm-nowrap py-3">
+
+            @foreach (var stage in State.Value.Boards[State.Value.SelectedBoard.Value].Stages.Values!)
+            {
+                <StageComponent StageId="@stage.Id" />
+            }
+        </div>
     }
-}
+
+</div>
 
 @code {
-
-    private BoardDto? board { get; set; }
-    private TaskDto[]? tasks { get; set; }
 
     [Parameter]
     public Guid Id { get; set; }
 
-    protected override async Task OnParametersSetAsync()
+    [Inject]
+    public IState<BoardsState> State { get; set; }
+
+    [Inject]
+    public IDispatcher Dispatcher { get; set; }
+
+    protected override void OnParametersSet()
     {
-        try
-        {
-            board = await Http.GetFromJsonAsync<BoardDto>($"board/{Id}");
-            tasks = await Http.GetFromJsonAsync<TaskDto[]>($"board/{Id}/task");
-        }
-        catch (AccessTokenNotAvailableException exception)
-        {
-            exception.Redirect();
-        }
+        Dispatcher.Dispatch(new SelectBoardAction(Id));
     }
+
+    private string BoardName => State.Value.SelectedBoard == null ? "Loading board..." : State.Value.GetSelectedBoard?.Name!;
 }

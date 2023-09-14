@@ -1,0 +1,45 @@
+﻿@using Fluxor;
+@using KanbanBoard.Client.Store.BoardUseCase;
+@using KanbanBoard.Shared;
+
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+<div class="col-sm-6 col-md-4 col-xl-3">
+    <div class="card bg-light">
+        <div class="card-body">
+            <h6 class="card-title text-uppercase text-truncate py-2">@Stage?.Name</h6>
+            @if (Stage != null)
+            {
+                foreach(var task in Stage.Tasks.Values)
+                {
+                    <TaskComponent TaskId="@task.Id" StageId="@StageId" />
+                }
+            }
+
+            <button class="btn btn-info" @onclick="AddTask">Add Task</button>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public Guid StageId { get; set; }
+
+    [Inject]
+    public IState<BoardsState> State { get; set; }
+
+    [Inject]
+    public IDispatcher Dispatcher { get; set; }
+
+    protected override void OnParametersSet()
+    {
+
+    }
+
+    public void AddTask()
+    {
+        Dispatcher.Dispatch(new AddTaskAction(StageId));
+    }
+
+    private StageState? Stage => State.Value.GetSelectedBoard?.GetStageState(StageId);
+}

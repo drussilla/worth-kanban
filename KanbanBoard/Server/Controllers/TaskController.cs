@@ -6,7 +6,7 @@ namespace KanbanBoard.Server.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("board/{boardId:guid}/task")]
+    [Route("api/board/{boardId:guid}/[controller]")]
     public class TaskController : ControllerBase
     {
         private readonly ILogger<TaskController> _logger;

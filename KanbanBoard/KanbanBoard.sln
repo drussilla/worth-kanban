@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KanbanBoard.Server", "Server\KanbanBoard.Server.csproj", "{34AD46B9-E4C6-445E-8440-887308C81C4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KanbanBoard.Server", "Server\KanbanBoard.Server.csproj", "{34AD46B9-E4C6-445E-8440-887308C81C4B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KanbanBoard.Client", "Client\KanbanBoard.Client.csproj", "{1DF672F3-1D4C-42AF-98D1-71BC01117D5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KanbanBoard.Client", "Client\KanbanBoard.Client.csproj", "{1DF672F3-1D4C-42AF-98D1-71BC01117D5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KanbanBoard.Shared", "Shared\KanbanBoard.Shared.csproj", "{6FA9521C-4901-4313-9242-E4A9C1AC461B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KanbanBoard.Shared", "Shared\KanbanBoard.Shared.csproj", "{6FA9521C-4901-4313-9242-E4A9C1AC461B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

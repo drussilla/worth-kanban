@@ -1,6 +1,10 @@
-﻿@using Microsoft.AspNetCore.Authorization
+﻿@using KanbanBoard.Client.Store.BoardUseCase;
+@using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using KanbanBoard.Shared
+@using Fluxor
+
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
 @attribute [Authorize]
 @inject HttpClient Http
@@ -8,21 +12,18 @@
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">KanbanBoard</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
     </div>
 </div>
 
-@if (boards == null)
+@if (BoardsState.Value.IsLoading)
 {
-    <p><em>Loading...</em></p>
+    <p class="text-white"><em>Loading...</em></p>
 }
 else
 {
-    <div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
+    <div class="nav-scrollable">
         <nav class="flex-column">
-            @foreach (var board in boards)
+            @foreach (var board in BoardsState.Value.Boards.Values)
             {
                 var link = $"board/{board.Id}";
                 <div class="nav-item px-3">
@@ -40,26 +41,17 @@ else
 
 
 @code {
-    private BoardDto[]? boards = null;
+    
+    [Inject]
+    public IDispatcher Dispatcher { get; set; }
 
-    private bool collapseNavMenu = true;
+    
+    [Inject]
+    private IState<BoardsState> BoardsState { get; set; }
 
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        try
-        {
-            this.boards = await Http.GetFromJsonAsync<BoardDto[]>("Board");
-        }
-        catch (AccessTokenNotAvailableException exception)
-        {
-            exception.Redirect();
-        }
-    }
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
+        base.OnInitialized();
+        Dispatcher.Dispatch(new FetchBoardsAction());
     }
 }
