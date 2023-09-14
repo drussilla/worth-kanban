@@ -28,18 +28,31 @@ next interview
 * Retain your commit history and use proper documentation standards
 
 * Be prepared to give a demo as well as technical walkthrough of your work
-during a second interview
+during a second interview 
 
 # Assumptions, Design and Architecture
+
+* I have decided to implement a simple authentication mechanism (both UI and API) to demonstrate cross-user collaboration. Since it was not in the requirements list I didn't want to spend much time on it so I went with a default identity server from the solution template (e.g. Duende IdentityServer).
+* For data storage on the backend side I am using SQL Server Express LocalDB as a convinient way to reduce local dependencies and speedup development. To access data I am using Entity Framework 7.0 so data store could be repalced with MSSQL in the configuration (or with other RDBMS with a bit of coding).
+* I am using EF Core code-first approach to track and apply change to the database schema (e.g. `dotnet ef database update`).
+
+# Dependencies and third-party libraries
+
+- [Duende IdentityServer](https://duendesoftware.com/products/identityserver) - This is to siplify registration and authentication process. This could be replaced with [Azure Active Directory](https://github.com/dotnet/aspnetcore/blob/main/src/Identity/README.md)
+- [SQL Server Express LocalDB](https://learn.microsoft.com/en-us/sql/database-engine/configure-windows/sql-server-express-localdb?view=sql-server-ver16) - This is a simpel local-file database, should be replaced with a production-ready alternatives (MSSQL, PostgreSQL, MySQL, etc.)
+- 
 
 # Local Development
 
 ## Prerequisites
 
-- Download and install the lastest .NET 6.0 SDK: https://dotnet.microsoft.com/en-us/download/dotnet/6.0
+*Please note:* In most cases all this is cross-platform, but in some commands I use Windows-specific syntaxis.
+
+- Download and install the lastest .NET 7.0 SDK: https://dotnet.microsoft.com/en-us/download/dotnet/7.0
 - Install git: https://git-scm.com/download
 - Clone this repo `git clone https://github.com/drussilla/worth-kanban.git`
 - Install dotnet-ef `dotnet tool install --global dotnet-ef` to create and database apply migrations
+- Apply migrations: `cd worth-kanban\KanbanBoard\Server && dotnet ef database update`
 
 ## Tests
 
