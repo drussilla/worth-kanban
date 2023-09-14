@@ -1,5 +1,6 @@
 using KanbanBoard.Server.Data;
 using KanbanBoard.Server.Models;
+using KanbanBoard.Server.Repositories;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,6 +30,10 @@ builder.Services
     .AddControllersWithViews();
 builder.Services
     .AddRazorPages();
+
+// Add local services
+builder.Services
+    .AddScoped<IBoardRepository, BoardRepository>();
 
 var app = builder.Build();
 
@@ -60,4 +65,23 @@ app.MapRazorPages();
 app.MapControllers();
 app.MapFallbackToFile("index.html");
 
+CreateDbIfNotExists(app);
+
 app.Run();
+
+
+static void CreateDbIfNotExists(IHost host)
+{
+    using var scope = host.Services.CreateScope();
+    var services = scope.ServiceProvider;
+    try
+    {
+        using var context = services.GetRequiredService<ApplicationDbContext>();
+        DbInitializer.Initialize(context);
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred creating the DB.");
+    }
+}

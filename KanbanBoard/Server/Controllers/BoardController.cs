@@ -1,3 +1,4 @@
+using KanbanBoard.Server.Repositories;
 using KanbanBoard.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,28 +11,29 @@ namespace KanbanBoard.Server.Controllers
     public class BoardController : ControllerBase
     {
         private readonly ILogger<BoardController> _logger;
+        private readonly IBoardRepository _boardRepository;
         private static readonly Random _rnd = new Random();
 
-        public BoardController(ILogger<BoardController> logger)
+        public BoardController(IBoardRepository boardRepository, ILogger<BoardController> logger)
         {
+            _boardRepository = boardRepository;
             _logger = logger;
         }
 
         [HttpGet]
-        public IEnumerable<BoardDto> Get()
+        public async Task<IEnumerable<BoardDto>> Get(CancellationToken token)
         {
-            return Enumerable.Range(1, 5).Select(index => new BoardDto
-            {
-                Id = Guid.NewGuid(),
-                Name = "Random " + _rnd.NextInt64(10)
-            })
-            .ToArray();
+            var boards = await _boardRepository.GetAsync(token);
+
+            // TODO: Could be replaced with auto mapper
+            return boards.Select(x => new BoardDto() { Id = x.Id, Name = x.Name });
         }
 
         [HttpGet("{id:guid}")]
-        public BoardDto Get(Guid id)
+        public async Task<BoardDto> Get(Guid id, CancellationToken token)
         {
-            return new BoardDto { Id = id, Name = "Test" + _rnd.NextInt64(10) };
+            var board = await _boardRepository.GetAsync(id, token);
+            return new BoardDto { Id = board.Id, Name = board.Name };
         }
     }
 }
