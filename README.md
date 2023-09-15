@@ -33,11 +33,13 @@ during a second interview
 # Assumptions, Design and Architecture
 
 * Since this is a test assignemnt, I have made a few compromises between development speed, production-readines and features of the app.
+* To reduce project complexity, both Backend and Frontend are written in C#
 * I have decided to implement a simple authentication mechanism (both UI and API) to demonstrate cross-user collaboration. Since it was not in the requirements list I didn't want to spend much time on it so I went with a default identity server from the solution template (e.g. Duende IdentityServer).
 * This application follows standard 3-tier model (DB, Buisness logic, UI), where DB and Business logic is in the Backend, and UI is in the Frontend.
 * Logging is implemented using Microsoft.Logging classes and can be configured in the `appsettings.json`. By default the app output to console.
 * Configuration is done via `appsettings.json` file.
 * To simplify development, Backend is also responsible for serving Frontend files (wasm DLLs, index.htm and related js and css files), but they can be easily decoupled and shipped as a separate apps.
+* Any frontend app can be used with provided Backend since they are loosely coupled.
 
 ## Backend
 
@@ -58,6 +60,10 @@ during a second interview
 - [SQL Server Express LocalDB](https://learn.microsoft.com/en-us/sql/database-engine/configure-windows/sql-server-express-localdb?view=sql-server-ver16) - This is a simpel local-file database, should be replaced with a production-ready alternatives (MSSQL, PostgreSQL, MySQL, etc.)
 - Bootstrap
 - Fluxor.Blazor.Web - Flux/Redux library for Blazor - https://github.com/mrpmorris/Fluxor/
+- xUnit - Unit test framework for Backend and Frontend
+- bUnit - a testing library for Blazor components
+- Moq - Mocking framework for .NET
+- FluentAssertions - Write unit test assertions in more fluent way
 
 # Local Development
 

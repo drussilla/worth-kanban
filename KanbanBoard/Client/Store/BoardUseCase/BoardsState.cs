@@ -34,6 +34,13 @@ namespace KanbanBoard.Client.Store.BoardUseCase
             Stages = dto.Stages.ToDictionary(key => key.Id, value => new StageState(value));
         }
 
+        public BoardState(Guid id, string name, IDictionary<Guid, StageState> stages)
+        {
+            Id = id;
+            Name = name;
+            Stages = stages;
+        }
+
         public Guid Id { get; }
 
         public string? Name { get; }
@@ -50,6 +57,13 @@ namespace KanbanBoard.Client.Store.BoardUseCase
             Id = dto.Id;
             Name = dto.Name;
             Tasks = dto.Tasks.ToDictionary(key => key.Id, value => new TaskState(value.Id, value.Title ?? string.Empty, value.Description ?? string.Empty));
+        }
+
+        public StageState(Guid id, string name, IDictionary<Guid, TaskState> tasks)
+        {
+            Id = id;
+            Name = name;
+            Tasks = tasks;
         }
 
         public Guid Id { get; }

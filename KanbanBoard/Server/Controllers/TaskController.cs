@@ -1,5 +1,4 @@
 using KanbanBoard.Server.Repositories;
-using KanbanBoard.Shared;
 using KanbanBoard.Shared.Commands;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +12,6 @@ namespace KanbanBoard.Server.Controllers
     {
         private readonly ITaskRepository taskRepository;
         private readonly ILogger<TaskController> logger;
-        private static readonly Random _rnd = new Random();
 
         public TaskController(ITaskRepository taskRepository, ILogger<TaskController> logger)
         {
@@ -26,6 +24,7 @@ namespace KanbanBoard.Server.Controllers
         {
             if (!command.IsValid())
             {
+                logger.LogError($"Invalid command to patch task {id}!");
                 throw new ArgumentException("Patch object is not valid");
             }
 

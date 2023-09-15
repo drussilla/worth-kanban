@@ -18,6 +18,11 @@ namespace KanbanBoard.Client.Store.TaskUseCase
         {
             // Find task in old Stage
             TaskState? task = null;
+            if (state.SelectedBoard == null) 
+            {
+                throw new InvalidOperationException("Cannot move task is board is not selected");
+            }
+
             foreach (var stage in state.GetSelectedBoard!.Stages.Values)
             {
                 if (stage.Tasks.ContainsKey(action.TaskId))

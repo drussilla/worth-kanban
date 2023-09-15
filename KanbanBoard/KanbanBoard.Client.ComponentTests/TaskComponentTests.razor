@@ -1,0 +1,48 @@
+@using Fluxor;
+@using KanbanBoard.Client.Store.BoardUseCase;
+@using Moq;
+@using KanbanBoard.Client.Components
+@inherits TestContext
+
+@code
+{
+    [Fact]
+    public void TaskComponentRendersCorrectly()
+    {
+        // Arrange
+        var task = new TaskState(Guid.NewGuid(), "Task1", "Descr", false);
+        var stage1 = new StageState(Guid.NewGuid(), "Stage1", new Dictionary<Guid, TaskState> { { task.Id, task } });
+        var board = new BoardState(Guid.NewGuid(), "Board1", new Dictionary<Guid, StageState> { { stage1.Id, stage1 } });
+        var initialState = new BoardsState(false, new Dictionary<Guid, BoardState> { { board.Id, board } }, board.Id);
+
+        var stateMock = new Mock<IState<BoardsState>>();
+        stateMock
+            .Setup(x => x.Value)
+            .Returns(initialState);
+
+        var dispatcherMock = new Mock<IDispatcher>();
+
+        this.Services.AddFluxor(x => x.ScanAssemblies(this.GetType().Assembly).WithLifetime(StoreLifetime.Scoped));
+
+        this.Services.AddScoped<IState<BoardsState>>(x => stateMock.Object);
+        this.Services.AddScoped<IDispatcher>(x => dispatcherMock.Object);
+
+        // Act
+        var cut = Render(@<TaskComponent TaskId="task.Id" StageId="stage1.Id" />);
+
+        // Assert
+        cut.MarkupMatches(
+            @<div class="border border-light py-2">
+                <div class="card draggable shadow-sm">
+                    <div class="card-body p-2">
+                        <div class="card-title">
+                            <a href="" class="lead font-weight-light">Task1</a>
+                        </div>
+                        <p>Descr</p>
+                        <button class="btn btn-primary btn-sm">Edit</button>
+                        <button class="btn btn-danger btn-sm">Delete</button>
+                    </div>
+                </div>
+            </div>);
+  }
+}
