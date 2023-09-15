@@ -30,6 +30,15 @@ next interview
 * Be prepared to give a demo as well as technical walkthrough of your work
 during a second interview 
 
+# TODO
+[x] Initial project setup
+[x] Setup test projects
+[x] Task add/edit/delete/move
+[] Stage management
+[] Board management
+[] Add Docker support
+[] Polishing UI and Backend
+
 # Assumptions, Design and Architecture
 
 * Since this is a test assignemnt, I have made a few compromises between development speed, production-readines and features of the app.
