@@ -4,41 +4,43 @@
 @using KanbanBoard.Shared;
 
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
-
-<div class="border border-light py-2">
-    <div class="card draggable shadow-sm">
-        <div class="card-body p-2">
-            @if (Task.IsEditing)
-            {
-                <div class="form-group row mb-3">
-                    <div class="col-md-12">
-                        <InputText class="form-control" @bind-Value="updatedTitle" />
+@if (Task != null)
+{
+    <div class="border border-light py-2">
+        <div class="card draggable shadow-sm">
+            <div class="card-body p-2">
+                @if (Task.IsEditing)
+                {
+                    <div class="form-group row mb-3">
+                        <div class="col-md-12">
+                            <InputText class="form-control" @bind-Value="updatedTitle" />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row mb-3">
-                    <div class="col-md-12">
-                        <InputTextArea class="form-control" @bind-Value="updatedDescription" />
+                    <div class="form-group row mb-3">
+                        <div class="col-md-12">
+                            <InputTextArea class="form-control" @bind-Value="updatedDescription" />
+                        </div>
                     </div>
-                </div>
 
-                <button class="btn btn-primary btn-sm" @onclick="OnSave">Save</button>
-                <button class="btn btn-secondary btn-sm">Cancel</button>
-            }
-            else
-            {
-                <div class="card-title">
-                    <a href="" class="lead font-weight-light">@Task.Title</a>
-                </div>
-                <p>
-                    @Task.Description
-                </p>
-                <button class="btn btn-primary btn-sm" @onclick="OnEdit">Edit</button>
-                <button class="btn btn-danger btn-sm">Delete</button>
-            }
+                    <button class="btn btn-primary btn-sm" @onclick="OnSave">Save</button>
+                    <button class="btn btn-secondary btn-sm" @onclick="OnCancel">Cancel</button>
+                }
+                else
+                {
+                    <div class="card-title">
+                        <a href="" class="lead font-weight-light">@Task.Title</a>
+                    </div>
+                    <p>
+                        @Task.Description
+                    </p>
+                    <button class="btn btn-primary btn-sm" @onclick="OnEdit">Edit</button>
+                    <button class="btn btn-danger btn-sm" @onclick="OnDelete">Delete</button>
+                }
 
+            </div>
         </div>
     </div>
-</div>
+}
 
 @code {
     [Parameter]
@@ -56,8 +58,9 @@
     private string updatedTitle;
     private string updatedDescription;
 
-    private TaskState Task => State.Value.GetSelectedBoard?.Stages[StageId].Tasks[TaskId] 
-        ?? throw new InvalidOperationException($"Task with Id {TaskId} doesn't exists in Stage with Id {StageId}");
+    private TaskState? Task => State.Value.GetSelectedBoard?.Stages[StageId].Tasks.ContainsKey(TaskId) ?? false
+        ? State.Value.GetSelectedBoard?.Stages[StageId].Tasks[TaskId]
+        : null;
 
     protected override void OnParametersSet()
     {
@@ -70,13 +73,20 @@
         Dispatcher.Dispatch(new EditTaskAction(TaskId, StageId));
     }
 
+    private void OnDelete()
+    {
+        Dispatcher.Dispatch(new DeleteTaskAction(TaskId, StageId));
+    }
+
     private void OnSave()
     {
         Dispatcher.Dispatch(new SaveTaskAction(TaskId, StageId, State.Value.SelectedBoard!.Value, updatedTitle, updatedDescription));
     }
 
-    private void OnTitleChange(string value)
+    private void OnCancel() 
     {
-        
+        updatedTitle = Task.Title;
+        updatedDescription = Task.Description;
+        Dispatcher.Dispatch(new CancelTaskEditAction(TaskId, StageId));
     }
 }

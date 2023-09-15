@@ -9,6 +9,8 @@ namespace KanbanBoard.Server.Models
         [Required(AllowEmptyStrings = false)]
         public string Name { get; set; } = string.Empty;
 
+        public int Order { get; set; }
+
         public Board Board { get; set; } = null!;
         
         public Guid BoardId { get; set; }

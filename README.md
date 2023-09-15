@@ -72,19 +72,37 @@ during a second interview
 *Please note:* In most cases all this is cross-platform, but in some commands I use Windows-specific syntaxis.
 
 - Download and install the lastest .NET 7.0 SDK: https://dotnet.microsoft.com/en-us/download/dotnet/7.0
+- Download and install SQL Server Express https://www.microsoft.com/en-us/sql-server/sql-server-downloads
 - Install git: https://git-scm.com/download
 - Clone this repo `git clone https://github.com/drussilla/worth-kanban.git`
 - Install dotnet-ef `dotnet tool install --global dotnet-ef` to create and database apply migrations
-- Apply migrations: `cd worth-kanban\KanbanBoard\Server && dotnet ef database update` (this is optional in Development mode since I have added automigration code for dev envs).
 
-- You can just open Visual Studio or Rider and start `KanbanBoard.Server.UnitTests`
+## Build and Run
+
+Build by executing:
+```
+dotnet build
+```
+
+You can just open Visual Studio or Rider and start `KanbanBoard.Server` project.
+
+or just
+
+```
+dotnet run --project .\Server\KanbanBoard.Server.csproj
+```
+
+and open `https://localhost:7185` in the browser
+
+**Note** You have to Register first!
+
 ## Tests
 
 All tests are written in C# and using Moq framework to mock dependencies and test subjects in isolation.
 
 Since I had a limited time implmeneting this assignment, I didn't want to achive 100% coverage with test, main goal is to validate critical pathes and show general approach to testing in this solution. Test should be expanded further more for production scenarios.
 
-_Test_
+**Test projects**
 * KanbanBoard.Server.UnitTests - Backend unit tests 
 * KanbanBoard.Client.UnitTests - Client unit tests 
 * KanbanBoard.Server.ComponentTests - Client component tests
@@ -105,4 +123,6 @@ _Note_: I didn't include any end-to-end, integration or performance tests since 
 * Add support for images, rich text, markdown
 * Add support for task reordering inside singe Stage
 * Add support for Stage reordering
+* Extend error handling logic
+* Extend logging
 

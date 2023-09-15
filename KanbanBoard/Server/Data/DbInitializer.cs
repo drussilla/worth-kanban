@@ -1,4 +1,5 @@
 ﻿using KanbanBoard.Server.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace KanbanBoard.Server.Data
 {
@@ -6,7 +7,7 @@ namespace KanbanBoard.Server.Data
     {
         public static void Initialize(ApplicationDbContext context)
         {
-            context.Database.EnsureCreated();
+            context.Database.Migrate();
 
             if (context.Boards.Any())
             {
@@ -24,25 +25,29 @@ namespace KanbanBoard.Server.Data
             defaultBoard.Stages.Add(new Stage()
             {
                 Id = Guid.NewGuid(),
-                Name = "Backlogs"
+                Name = "Backlogs",
+                Order = 100000
             });
 
             defaultBoard.Stages.Add(new Stage()
             {
                 Id = Guid.NewGuid(),
-                Name = "Planned"
+                Name = "Planned",
+                Order = 200000
             });
 
             defaultBoard.Stages.Add(new Stage()
             {
                 Id = Guid.NewGuid(),
-                Name = "In Progress"
+                Name = "In Progress",
+                Order = 300000
             });
 
             defaultBoard.Stages.Add(new Stage()
             {
                 Id = Guid.NewGuid(),
-                Name = "Completed"
+                Name = "Completed",
+                Order = 400000
             });
 
             context.Boards.Add(defaultBoard);

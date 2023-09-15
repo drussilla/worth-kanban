@@ -21,7 +21,7 @@ namespace KanbanBoard.Server.UnitTests.Controllers
             var invalidCommand = new PatchOrCreateTaskCommand() { Title = string.Empty };
 
             // Act  
-            Func<Task> act =  async () => await sut.Patch(Guid.NewGuid(), invalidCommand, CancellationToken.None);
+            Func<Task> act =  async () => await sut.PatchOrCreate(Guid.NewGuid(), invalidCommand, CancellationToken.None);
 
             // Assert
             await act.Should().ThrowAsync<ArgumentException>();
@@ -44,7 +44,7 @@ namespace KanbanBoard.Server.UnitTests.Controllers
             var taskId = Guid.NewGuid();
 
             // Act  
-            await sut.Patch(taskId, validCommand, CancellationToken.None);
+            await sut.PatchOrCreate(taskId, validCommand, CancellationToken.None);
 
             // Assert
             repoMock.Verify(x =>

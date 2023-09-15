@@ -20,7 +20,7 @@ namespace KanbanBoard.Server.Controllers
         }
 
         [HttpPatch("{id:guid}")]
-        public async Task Patch(Guid id, PatchOrCreateTaskCommand command, CancellationToken token)
+        public async Task PatchOrCreate(Guid id, PatchOrCreateTaskCommand command, CancellationToken token)
         {
             if (!command.IsValid())
             {
@@ -29,6 +29,18 @@ namespace KanbanBoard.Server.Controllers
             }
 
             await taskRepository.PatchOrCreateTask(id, command, token);
+        }
+
+        [HttpPost("{id:guid}/move")]
+        public async Task Move(Guid id, MoveTaskCommand command, CancellationToken token)
+        {
+            await taskRepository.MoveTask(id, command.NewStageId, token);
+        }
+
+        [HttpDelete("{id:guid}")]
+        public async Task Delete(Guid id, CancellationToken token)
+        {
+            await taskRepository.DeleteTask(id, token);
         }
     }
 }

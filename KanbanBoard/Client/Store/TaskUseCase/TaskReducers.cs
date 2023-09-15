@@ -52,10 +52,25 @@ namespace KanbanBoard.Client.Store.TaskUseCase
         }
 
         [ReducerMethod]
+        public static BoardsState ReduceCancelTaskEditAction(BoardsState state, CancelTaskEditAction action)
+        {
+            var taskState = state.Boards[state.SelectedBoard!.Value].Stages[action.StageId].Tasks[action.TaskId];
+            state.Boards[state.SelectedBoard!.Value].Stages[action.StageId].Tasks[action.TaskId] = new TaskState(taskState.Id, taskState.Title, taskState.Description, false);
+            return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard);
+        }
+
+        [ReducerMethod]
         public static BoardsState ReduceSaveTaskAction(BoardsState state, SaveTaskAction action)
         {
             var taskState = state.Boards[state.SelectedBoard!.Value].Stages[action.StageId].Tasks[action.TaskId];
             state.Boards[state.SelectedBoard!.Value].Stages[action.StageId].Tasks[action.TaskId] = new TaskState(taskState.Id, action.Title, action.Description, false);
+            return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard);
+        }
+
+        [ReducerMethod]
+        public static BoardsState ReduceDeleteTaskAction(BoardsState state, DeleteTaskAction action)
+        {
+            state.Boards[state.SelectedBoard!.Value].Stages[action.StageId].Tasks.Remove(action.TaskId);
             return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard);
         }
     }

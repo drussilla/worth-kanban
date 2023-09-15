@@ -10,13 +10,13 @@
         <div class="card-body">
             <h6 class="card-title text-uppercase text-truncate py-2">@Stage?.Name</h6>
             @if (Stage != null)
-            {
-                <Dropzone Items="Stage.Tasks.Values.ToList()" OnItemDrop="@((TaskState arg) => OnItemDrop(arg))">
+            {   
+                <Dropzone Class="drop-zone" Items="Stage.Tasks.Values.ToList()" OnItemDrop="@((TaskState arg) => OnItemDrop(arg))">
                     <TaskComponent TaskId="@context.Id" StageId="@StageId" />
                 </Dropzone>
             }
 
-            <button class="btn btn-info" @onclick="AddTask">Add Task</button>
+            <button class="btn btn-primary" @onclick="AddTask">Add Task</button>
         </div>
     </div>
 </div>

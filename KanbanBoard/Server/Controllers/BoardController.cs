@@ -29,7 +29,7 @@ namespace KanbanBoard.Server.Controllers
             {
                 Id = board.Id,
                 Name = board.Name,
-                Stages = board.Stages.Select(stage => new StageDto
+                Stages = board.Stages.OrderBy(x => x.Order).Select(stage => new StageDto
                 {
                     Id = stage.Id,
                     Name = stage.Name,

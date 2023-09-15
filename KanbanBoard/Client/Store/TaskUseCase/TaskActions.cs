@@ -6,5 +6,9 @@
 
     public record EditTaskAction(Guid TaskId, Guid StageId);
 
+    public record CancelTaskEditAction(Guid TaskId, Guid StageId);
+
+    public record DeleteTaskAction(Guid TaskId, Guid StageId);
+
     public record SaveTaskAction(Guid TaskId, Guid StageId, Guid BoardId, string Title, string Description);
 }
