@@ -79,6 +79,22 @@ during a second interview
 
 ## Tests
 
+All tests are written in C# and using Moq framework to mock dependencies and test subjects in isolation.
+
+Since I had a limited time implmeneting this assignment, I didn't want to achive 100% coverage with test, main goal is to validate critical pathes and show general approach to testing in this solution. Test should be expanded further more for production scenarios.
+
+_Test_
+* KanbanBoard.Server.UnitTests - Backend unit tests 
+* KanbanBoard.Client.UnitTests - Client unit tests 
+* KanbanBoard.Server.ComponentTests - Client component tests
+
+To run tests simply execute in the root forlder:
+```
+dotnet test
+```
+
+_Note_: I didn't include any end-to-end, integration or performance tests since I had a limited time for this assignment.
+
 # Production
 
 # Future Impovements
@@ -86,4 +102,6 @@ during a second interview
 * Archive tasks/stages/boards
 * Use SignarR to add interactivity to the board
 * Add support for images, rich text, markdown
+* Add support for task reordering inside singe Stage
+* Add support for Stage reordering
 
