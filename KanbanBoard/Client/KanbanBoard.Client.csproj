@@ -19,8 +19,4 @@
     <ProjectReference Include="..\Shared\KanbanBoard.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Store\StageUseCase\" />
-  </ItemGroup>
-
 </Project>

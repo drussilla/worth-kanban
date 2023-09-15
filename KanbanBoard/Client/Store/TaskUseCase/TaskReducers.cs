@@ -9,7 +9,7 @@ namespace KanbanBoard.Client.Store.TaskUseCase
         public static BoardsState ReduceAddTaskAction(BoardsState state, AddTaskAction action)
         {
             var id = Guid.NewGuid();
-            state.Boards[state.SelectedBoard!.Value].Stages[action.StageId].Tasks.Add(id, new TaskState(id, id.ToString(), string.Empty, true));
+            state.Boards[state.SelectedBoard!.Value].Stages[action.StageId].Tasks.Add(id, new TaskState(id, string.Empty, string.Empty, true));
             return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard);
         }
 

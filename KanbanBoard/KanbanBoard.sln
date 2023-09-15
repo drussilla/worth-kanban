@@ -9,11 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KanbanBoard.Client", "Clien
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KanbanBoard.Shared", "Shared\KanbanBoard.Shared.csproj", "{6FA9521C-4901-4313-9242-E4A9C1AC461B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KanbanBoard.Server.UnitTests", "KanbanBoard.Server.UnitTests\KanbanBoard.Server.UnitTests.csproj", "{0B99E56D-BB44-4F6C-A12F-5E0385C155D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KanbanBoard.Server.UnitTests", "KanbanBoard.Server.UnitTests\KanbanBoard.Server.UnitTests.csproj", "{0B99E56D-BB44-4F6C-A12F-5E0385C155D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KanbanBoard.Client.UnitTests", "KanbanBoard.Client.UnitTests\KanbanBoard.Client.UnitTests.csproj", "{EBA931A5-71C0-439F-B8AA-B69EBB21E79D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KanbanBoard.Client.UnitTests", "KanbanBoard.Client.UnitTests\KanbanBoard.Client.UnitTests.csproj", "{EBA931A5-71C0-439F-B8AA-B69EBB21E79D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KanbanBoard.Client.ComponentTests", "KanbanBoard.Client.ComponentTests\KanbanBoard.Client.ComponentTests.csproj", "{40DDFF87-FFA4-4E78-A2F5-BD9D451440D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KanbanBoard.Client.ComponentTests", "KanbanBoard.Client.ComponentTests\KanbanBoard.Client.ComponentTests.csproj", "{40DDFF87-FFA4-4E78-A2F5-BD9D451440D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

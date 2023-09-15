@@ -13,22 +13,24 @@
                 {
                     <div class="form-group row mb-3">
                         <div class="col-md-12">
-                            <InputText class="form-control" @bind-Value="updatedTitle" />
+                            <!-- Inline validation. This can be moved to a separate method or class -->
+                            <TextInputReactive placeholder="Title" class="@((updatedTitle == string.Empty ? "form-control is-invalid" : "form-control"))" @bind-Value="updatedTitle" />
                         </div>
                     </div>
                     <div class="form-group row mb-3">
                         <div class="col-md-12">
-                            <InputTextArea class="form-control" @bind-Value="updatedDescription" />
+                            <InputTextArea placeholder="Description" class="form-control" @bind-Value="updatedDescription" />
                         </div>
                     </div>
 
-                    <button class="btn btn-primary btn-sm" @onclick="OnSave">Save</button>
+                    <!-- Inline validation. This can be moved to a separate method or class -->
+                    <button class="btn btn-primary btn-sm" disabled="@(updatedTitle == string.Empty)" @onclick="OnSave">Save</button>
                     <button class="btn btn-secondary btn-sm" @onclick="OnCancel">Cancel</button>
                 }
                 else
                 {
                     <div class="card-title">
-                        <a href="" class="lead font-weight-light">@Task.Title</a>
+                        <p class="lead font-weight-light">@Task.Title</p>
                     </div>
                     <p>
                         @Task.Description
