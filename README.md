@@ -34,10 +34,10 @@ during a second interview
 - [x] Initial project setup
 - [x] Setup test projects
 - [x] Task add/edit/delete/move
-- [] Stage management
-- [] Board management
-- [] Add Docker support
-- [] Polishing UI and Backend
+- [ ] Stage management
+- [ ] Board management
+- [ ] Add Docker support
+- [ ] Polishing UI and Backend
 
 # Assumptions, Design and Architecture
 
