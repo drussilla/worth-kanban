@@ -37,6 +37,8 @@ during a second interview
 - [ ] Stage management
 - [ ] Board management
 - [ ] Add Docker support
+- [ ] Add GitHub CI integration
+- [ ] Add Production instructions
 - [ ] Polishing UI and Backend
 
 # Assumptions, Design and Architecture
