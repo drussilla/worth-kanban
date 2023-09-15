@@ -1,5 +1,6 @@
 ﻿@using Fluxor;
 @using KanbanBoard.Client.Store.BoardUseCase;
+@using KanbanBoard.Client.Store.TaskUseCase;
 @using KanbanBoard.Shared;
 
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
@@ -29,11 +30,6 @@
 
     [Inject]
     public IDispatcher Dispatcher { get; set; }
-
-    protected override void OnParametersSet()
-    {
-
-    }
 
     private void AddTask()
     {

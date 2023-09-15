@@ -1,4 +1,6 @@
+using KanbanBoard.Server.Repositories;
 using KanbanBoard.Shared;
+using KanbanBoard.Shared.Commands;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,32 +8,28 @@ namespace KanbanBoard.Server.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("api/board/{boardId:guid}/[controller]")]
+    [Route("api/[controller]")]
     public class TaskController : ControllerBase
     {
-        private readonly ILogger<TaskController> _logger;
+        private readonly ITaskRepository taskRepository;
+        private readonly ILogger<TaskController> logger;
         private static readonly Random _rnd = new Random();
 
-        public TaskController(ILogger<TaskController> logger)
+        public TaskController(ITaskRepository taskRepository, ILogger<TaskController> logger)
         {
-            _logger = logger;
+            this.taskRepository = taskRepository;
+            this.logger = logger;
         }
 
-        [HttpGet]
-        public IEnumerable<TaskDto> Get(Guid boardId)
+        [HttpPatch("{id:guid}")]
+        public async Task Patch(Guid id, PatchOrCreateTaskCommand command, CancellationToken token)
         {
-            return Enumerable.Range(1, 5).Select(index => new TaskDto
+            if (!command.IsValid())
             {
-                Id = Guid.NewGuid(),
-                Title = "Random Task" + _rnd.NextInt64(10)
-            })
-            .ToArray();
-        }
+                throw new ArgumentException("Patch object is not valid");
+            }
 
-        [HttpGet("{id:guid}")]
-        public TaskDto Get(Guid boardId, Guid id)
-        {
-            return new TaskDto { Id = id, Title = "Test" + _rnd.NextInt64(10) };
+            await taskRepository.PatchOrCreateTask(id, command, token);
         }
     }
 }

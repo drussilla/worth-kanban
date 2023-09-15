@@ -6,9 +6,6 @@ namespace KanbanBoard.Client.Store.BoardUseCase
 
     public record FetchBoardsResultAction(IEnumerable<BoardDto> Boards);
 
-    public record SelectBoardAction(Guid Id);
-    
-    public record AddTaskAction(Guid stageId);
+    public record SelectBoardAction(Guid Id);  
 
-    public record MoveTaskAction(Guid taskId, Guid newStageId);
 }

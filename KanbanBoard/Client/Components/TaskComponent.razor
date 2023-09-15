@@ -1,4 +1,5 @@
 ﻿@using Fluxor;
+@using KanbanBoard.Client.Store.TaskUseCase;
 @using KanbanBoard.Client.Store.BoardUseCase;
 @using KanbanBoard.Shared;
 
@@ -7,13 +8,34 @@
 <div class="border border-light py-2">
     <div class="card draggable shadow-sm">
         <div class="card-body p-2">
-            <div class="card-title">
-                <a href="" class="lead font-weight-light">@Task?.Title</a>
-            </div>
-            <p>
-                @Task?.Description
-            </p>
-            <button class="btn btn-danger btn-sm">Delete</button>
+            @if (Task.IsEditing)
+            {
+                <div class="form-group row mb-3">
+                    <div class="col-md-12">
+                        <InputText class="form-control" @bind-Value="updatedTitle" />
+                    </div>
+                </div>
+                <div class="form-group row mb-3">
+                    <div class="col-md-12">
+                        <InputTextArea class="form-control" @bind-Value="updatedDescription" />
+                    </div>
+                </div>
+
+                <button class="btn btn-primary btn-sm" @onclick="OnSave">Save</button>
+                <button class="btn btn-secondary btn-sm">Cancel</button>
+            }
+            else
+            {
+                <div class="card-title">
+                    <a href="" class="lead font-weight-light">@Task.Title</a>
+                </div>
+                <p>
+                    @Task.Description
+                </p>
+                <button class="btn btn-primary btn-sm" @onclick="OnEdit">Edit</button>
+                <button class="btn btn-danger btn-sm">Delete</button>
+            }
+
         </div>
     </div>
 </div>
@@ -21,13 +43,40 @@
 @code {
     [Parameter]
     public Guid TaskId { get; set; }
-    
+
     [Parameter]
     public Guid StageId { get; set; }
 
     [Inject]
     public IState<BoardsState> State { get; set; }
 
-    private TaskState Task => State.Value.GetSelectedBoard?.Stages[StageId].Tasks[TaskId];
+    [Inject]
+    public IDispatcher Dispatcher { get; set; }
 
+    private string updatedTitle;
+    private string updatedDescription;
+
+    private TaskState Task => State.Value.GetSelectedBoard?.Stages[StageId].Tasks[TaskId] 
+        ?? throw new InvalidOperationException($"Task with Id {TaskId} doesn't exists in Stage with Id {StageId}");
+
+    protected override void OnParametersSet()
+    {
+        updatedTitle = Task.Title;
+        updatedDescription = Task.Description;
+    }
+
+    private void OnEdit()
+    {
+        Dispatcher.Dispatch(new EditTaskAction(TaskId, StageId));
+    }
+
+    private void OnSave()
+    {
+        Dispatcher.Dispatch(new SaveTaskAction(TaskId, StageId, State.Value.SelectedBoard!.Value, updatedTitle, updatedDescription));
+    }
+
+    private void OnTitleChange(string value)
+    {
+        
+    }
 }

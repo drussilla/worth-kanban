@@ -34,6 +34,8 @@ builder.Services
 // Add local services
 builder.Services
     .AddScoped<IBoardRepository, BoardRepository>();
+builder.Services
+    .AddScoped<ITaskRepository, TaskRepository>();
 
 var app = builder.Build();
 
