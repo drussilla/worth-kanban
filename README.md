@@ -77,6 +77,7 @@ during a second interview
 - Install dotnet-ef `dotnet tool install --global dotnet-ef` to create and database apply migrations
 - Apply migrations: `cd worth-kanban\KanbanBoard\Server && dotnet ef database update` (this is optional in Development mode since I have added automigration code for dev envs).
 
+- You can just open Visual Studio or Rider and start `KanbanBoard.Server.UnitTests`
 ## Tests
 
 All tests are written in C# and using Moq framework to mock dependencies and test subjects in isolation.
