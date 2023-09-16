@@ -23,7 +23,9 @@ namespace KanbanBoard.Client.Store.BoardUseCase
 
         public Guid? SelectedBoard { get; }
 
-        public BoardState? GetSelectedBoard => SelectedBoard.HasValue ? Boards[SelectedBoard.Value] : null;
+        public BoardState? GetSelectedBoard => SelectedBoard.HasValue && Boards.ContainsKey(SelectedBoard.Value)
+            ? Boards[SelectedBoard.Value] 
+            : null;
     }
 
     public class BoardState 

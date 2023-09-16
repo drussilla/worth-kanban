@@ -2,6 +2,7 @@
 using KanbanBoard.Client.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+using Microsoft.Extensions.Logging;
 
 namespace KanbanBoard.Client.Store.BoardUseCase
 {
@@ -82,6 +83,34 @@ namespace KanbanBoard.Client.Store.BoardUseCase
         public async Task HandleAddBoardResultAction(AddBoardResultAction action, IDispatcher dispatcher)
         {
             navigationManager.NavigateTo($"/board/{action.Board.Id}");
+        }
+
+        [EffectMethod]
+        public async Task HandleDeleteBoardAction(DeleteBoardAction action, IDispatcher dispatcher)
+        {
+            try
+            {
+                // I use fire and forget here, to save some time on development, in prod I would handle result and dispatched another action to update the state accordingly
+                await boardService.DeleteBoardAsync(action.Id);
+                var nextUrl = "/";
+                if (action.BoardToSelectNext != null)
+                {
+                    nextUrl = $"/board/{action.BoardToSelectNext}";
+                }
+
+                logger.LogInformation($"Navigating to {nextUrl}");
+                navigationManager.NavigateTo(nextUrl);
+            }
+            catch (AccessTokenNotAvailableException exception)
+            {
+                logger.LogError(exception, "Token is not valid. Redirecting to login");
+                exception.Redirect();
+            }
+            catch (Exception exception)
+            {
+                logger.LogError(exception, "Unexpected error. Rethrowing");
+                throw;
+            }
         }
     }
 

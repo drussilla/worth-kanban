@@ -31,6 +31,11 @@ namespace KanbanBoard.Client.Services
             return board;
         }
 
+        public async Task DeleteBoardAsync(Guid id)
+        {
+            await httpClient.DeleteAsync($"api/board/{id}");
+        }
+
         public async Task DeleteStageAsync(Guid stageId)
         {
             await httpClient.DeleteAsync($"api/stage/{stageId}");

@@ -15,14 +15,15 @@
     </div>
 </div>
 
-@if (BoardsState.Value.IsLoading)
-{
-    <p class="text-white"><em>Loading...</em></p>
-}
-else
-{
-    <div class="nav-scrollable">
+<div class="nav-scrollable">
         <nav class="flex-column">
+        @if (BoardsState.Value.IsLoading)
+        {
+            <p class="text-white px-4 py-2"><em>Loading...</em></p>
+        }
+        else
+        {
+    
             @foreach (var board in BoardsState.Value.Boards.Values)
             {
                 var link = $"board/{board.Id}";
@@ -38,10 +39,10 @@ else
                     <span class="oi oi-plus" aria-hidden="true"></span> <span class="text-truncate mx-1">Create Board</span>
                 </a>                    
             </div>
-        </nav>
         
-    </div>
-}
+        }
+    </nav>
+</div>
 
 
 

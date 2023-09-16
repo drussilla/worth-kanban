@@ -48,5 +48,10 @@ namespace KanbanBoard.Client.Services
         /// Update board name
         /// </summary>
         Task UpdateBoardAsync(Guid id, string name);
+        
+        /// <summary>
+        /// Delete board and all content (including Stages and Tasks)
+        /// </summary>
+        Task DeleteBoardAsync(Guid id);
     }
 }

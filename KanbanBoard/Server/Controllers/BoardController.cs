@@ -79,5 +79,11 @@ namespace KanbanBoard.Server.Controllers
 
             await boardRepository.UpdateNameAsync(id, request.Name, token);
         }
+
+        [HttpDelete("{id:guid}")]
+        public async Task Delete(Guid id, CancellationToken token)
+        {
+            await boardRepository.DeleteAsync(id, token);
+        }
     }
 }

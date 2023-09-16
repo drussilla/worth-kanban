@@ -38,5 +38,12 @@ namespace KanbanBoard.Client.Store.BoardUseCase
             state.Boards.Add(action.Board.Id, new BoardState(action.Board));
             return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard, false);
         }
+
+        [ReducerMethod]
+        public static BoardsState ReduceDeleteBoardAction(BoardsState state, DeleteBoardAction action)
+        {
+            state.Boards.Remove(action.Id);
+            return new(isLoading: state.IsLoading, boards: state.Boards, action.BoardToSelectNext, false);
+        }
     }
 }

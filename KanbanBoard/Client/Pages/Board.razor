@@ -7,6 +7,7 @@
 @using KanbanBoard.Shared
 @using KanbanBoard.Client.Components
 @inject HttpClient Http
+@inject IJSRuntime JsRuntime
 
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
@@ -23,6 +24,7 @@
     {
         <h1>@BoardName</h1>
         <button class="btn" @onclick="EditBoardName"><span class="oi oi-pencil" aria-hidden="true"></span></button>
+        <button class="btn" @onclick="DeleteBoard"><span class="oi oi-trash" aria-hidden="true"></span></button>
     }    
 </div>
 
@@ -83,5 +85,15 @@
     {
         updatedName = BoardName;
         Dispatcher.Dispatch(new CancelEditBoardAction(Id));
+    }
+
+    private async Task DeleteBoard()
+    {
+        bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
+        if (confirmed)
+        {
+            var nextBoardToSelect = State.Value.Boards.Keys.Where(x => x != Id).FirstOrDefault();
+            Dispatcher.Dispatch(new DeleteBoardAction(Id, nextBoardToSelect == default ? null : nextBoardToSelect));
+        }
     }
 }

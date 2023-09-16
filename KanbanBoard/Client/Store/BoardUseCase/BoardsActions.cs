@@ -10,6 +10,8 @@ namespace KanbanBoard.Client.Store.BoardUseCase
 
     public record EditBoardAction(Guid Id);
 
+    public record DeleteBoardAction(Guid Id, Guid? BoardToSelectNext);
+
     public record CancelEditBoardAction(Guid Id);
 
     public record SaveBoardAction(Guid Id, string Name);

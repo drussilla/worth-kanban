@@ -38,6 +38,20 @@ namespace KanbanBoard.Server.Repositories
             return board;
         }
 
+        public async System.Threading.Tasks.Task DeleteAsync(Guid id, CancellationToken token)
+        {
+            // First delete all tasks form the board
+            await context.Tasks.Where(x => x.BoardId == id).ExecuteDeleteAsync(token);
+
+            // Then delete all stages form the board
+            await context.Stages.Where(x => x.BoardId == id).ExecuteDeleteAsync(token);
+
+            // And finally we can delete Board
+            await context.Boards.Where(x => x.Id == id).ExecuteDeleteAsync(token);
+
+            await context.SaveChangesAsync();
+        }
+
         public Task<List<Board>> GetAsync(CancellationToken token)
         {
             logger.LogDebug("Getting all boards");
