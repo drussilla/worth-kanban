@@ -36,7 +36,16 @@ namespace KanbanBoard.Client.Services
             });
         }
 
-        public async Task UpdateTaskAsync(Guid id, Guid stageId, Guid boardId, string title, string description)
+        public async Task UpdateOrCreateStageAsync(Guid id, Guid boardId, string name)
+        {
+            await httpClient.PatchAsJsonAsync($"api/stage/{id}", new UpdateOrCreateStageCommand
+            {
+                BoardId = boardId,
+                Name = name,
+            });
+        }
+
+        public async Task UpdateOrCreateTaskAsync(Guid id, Guid stageId, Guid boardId, string title, string description)
         {
             await httpClient.PatchAsJsonAsync($"api/task/{id}", new UpdateOrCreateTaskCommand 
             {

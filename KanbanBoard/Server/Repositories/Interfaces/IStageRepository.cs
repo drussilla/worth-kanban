@@ -8,9 +8,9 @@
         Task UpdateTitleAsync(Guid id, string title, CancellationToken token);
 
         /// <summary>
-        /// Create new stage with <paramref name="title"/> inside board with <paramref name="boardId"/>
+        /// Create new stage with <paramref name="name"/> inside board with <paramref name="boardId"/>
         /// </summary>
-        Task CreateStageAsync(Guid id, Guid boardId, string title, CancellationToken token);
+        Task CreateOrUpdateStageAsync(Guid id, Guid boardId, string name, CancellationToken token);
         
         /// <summary>
         /// Deletes Stage from DB

@@ -14,9 +14,9 @@ namespace KanbanBoard.Client.Services
         Task<IEnumerable<BoardDto>> GetBoardsAsync();
 
         /// <summary>
-        /// Update task with new title and description
+        /// Update exiting task or create a new one with title and description
         /// </summary>
-        Task UpdateTaskAsync(Guid id, Guid stageId, Guid boardId, string title, string description);
+        Task UpdateOrCreateTaskAsync(Guid id, Guid stageId, Guid boardId, string title, string description);
 
         /// <summary>
         /// Move task to a differect Stage
@@ -32,5 +32,10 @@ namespace KanbanBoard.Client.Services
         /// Deletes Stage
         /// </summary>
         Task DeleteStageAsync(Guid stageId);
+        
+        /// <summary>
+        /// Update or Create Stage
+        /// </summary>
+        Task UpdateOrCreateStageAsync(Guid id, Guid boardId, string name);
     }
 }

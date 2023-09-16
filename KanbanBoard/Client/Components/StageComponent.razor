@@ -6,19 +6,33 @@
 
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
-<div class="col-sm-6 col-md-4 col-xl-3">
+<div class="col-sm-6 col-md-4 col-xl-2">
     <div class="card bg-light">
         <div class="card-body">
-            <h6 class="card-title text-uppercase text-truncate py-2">@Stage?.Name</h6>
             @if (Stage != null)
-            {   
+            {
+                @if (Stage.IsEditing)
+                {   <div class="d-flex">
+                        <TextInputReactive placeholder="Title" class="@((updatedName == string.Empty ? "form-control is-invalid" : "form-control"))" @bind-Value="updatedName" />
+                        <button class="btn" @onclick="SaveStage" disabled="@(updatedName == string.Empty)"><span class="oi oi-check" aria-hidden="true"></span></button>
+                        <button class="btn" @onclick="CancelEdit"><span class="oi oi-x" aria-hidden="true"></span></button>
+                    </div>
+                }
+                else
+                {
+                    <div class="d-flex">
+                        <h6 class="card-title text-uppercase text-truncate py-2">@Stage?.Name</h6>
+                        <button class="btn" @onclick="EditStage" disabled="@(updatedName == string.Empty)"><span class="oi oi-pencil" aria-hidden="true"></span></button>
+                    </div>
+                }
+
                 <Dropzone Class="drop-zone" Items="Stage.Tasks.Values.ToList()" OnItemDrop="@((TaskState arg) => OnItemDrop(arg))">
                     <TaskComponent TaskId="@context.Id" StageId="@StageId" />
                 </Dropzone>
             }
 
-            <button class="btn btn-primary" @onclick="AddTask">Add Task</button>
-            <button class="btn btn-danger" title="You can only delete empty Stages" disabled="@(Stage?.Tasks.Values.Count != 0)" @onclick="DeleteStage">Delete Stage</button>
+            <button class="btn btn-primary" disabled="@Stage.IsEditing" @onclick="AddTask">Add Task</button>
+            <button class="btn btn-danger" title="You can only delete empty Stages" disabled="@(Stage?.Tasks.Values.Count != 0 || Stage.IsEditing)" @onclick="DeleteStage">Delete Stage</button>
         </div>
     </div>
 </div>
@@ -33,9 +47,31 @@
     [Inject]
     public IDispatcher Dispatcher { get; set; }
 
+    private string updatedName;
+
+    protected override void OnParametersSet()
+    {
+        updatedName = Stage.Name;
+    }
+
     private void AddTask()
     {
         Dispatcher.Dispatch(new AddTaskAction(StageId));
+    }
+
+    private void EditStage()
+    {
+        Dispatcher.Dispatch(new EditStageAction(StageId));
+    }
+
+    private void SaveStage()
+    {
+        Dispatcher.Dispatch(new SaveStageAction(StageId, State.Value.SelectedBoard!.Value, updatedName));
+    }
+
+    private void CancelEdit()
+    {
+        Dispatcher.Dispatch(new CancelEditStageAction(StageId));
     }
 
     private void DeleteStage()

@@ -36,7 +36,7 @@ namespace KanbanBoard.Server.UnitTests.Repositories
             var sut = new StageRepository(dummyContext, orderGeneratorMock.Object, new Mock<ILogger<StageRepository>>().Object);
 
             // Act
-            await sut.CreateStageAsync(id, boardId, title, CancellationToken.None);
+            await sut.CreateOrUpdateStageAsync(id, boardId, title, CancellationToken.None);
             var result = dummyContext.Stages.First(x => x.Id == id);
 
             // Assert
@@ -80,7 +80,7 @@ namespace KanbanBoard.Server.UnitTests.Repositories
             var sut = new StageRepository(dummyContext, orderGeneratorMock.Object, new Mock<ILogger<StageRepository>>().Object);
 
             // Act
-            await sut.CreateStageAsync(id, boardId, title, CancellationToken.None);
+            await sut.CreateOrUpdateStageAsync(id, boardId, title, CancellationToken.None);
             var result = dummyContext.Stages.First(x => x.Id == id);
 
             // Assert

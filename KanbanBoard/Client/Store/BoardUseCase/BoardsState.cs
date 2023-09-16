@@ -1,6 +1,5 @@
 ﻿using Fluxor;
 using KanbanBoard.Shared;
-using System.Xml;
 
 namespace KanbanBoard.Client.Store.BoardUseCase
 {
@@ -15,7 +14,6 @@ namespace KanbanBoard.Client.Store.BoardUseCase
             Boards = boards;
             SelectedBoard = selectedBoard;
         }
-
         public bool IsLoading { get; } = true;
 
         public IDictionary<Guid, BoardState> Boards { get; } = new Dictionary<Guid, BoardState>();
@@ -56,20 +54,33 @@ namespace KanbanBoard.Client.Store.BoardUseCase
         {
             Id = dto.Id;
             Name = dto.Name;
-            Tasks = dto.Tasks.ToDictionary(key => key.Id, value => new TaskState(value.Id, value.Title ?? string.Empty, value.Description ?? string.Empty));
+            Tasks = dto.Tasks.ToDictionary(key => key.Id, value => new TaskState(value.Id, value.Title ?? string.Empty, value.Description ?? string.Empty, true, false));
+            IsEditing = false;
+            IsPersisted = true;
         }
 
-        public StageState(Guid id, string name, IDictionary<Guid, TaskState> tasks)
+        public StageState(Guid id, string? name, IDictionary<Guid, TaskState> tasks, bool isPersisted = false, bool isEditing = false)
         {
             Id = id;
             Name = name;
             Tasks = tasks;
+            IsEditing = isEditing;
+            IsPersisted = isPersisted;
         }
 
         public Guid Id { get; }
+
         public string? Name { get; }
+
+        public bool IsEditing { get; }
+
+        /// <summary>
+        /// Indicates whether this object is alredy saved on the backned.
+        /// </summary>
+        public bool IsPersisted { get; }
+
         public IDictionary<Guid, TaskState> Tasks { get; } = new Dictionary<Guid, TaskState>();
     }
 
-    public record TaskState(Guid Id, string Title, string Description, bool IsEditing = false);
+    public record TaskState(Guid Id, string Title, string Description, bool IsPersistent, bool IsEditing);
 }

@@ -10,7 +10,7 @@
     public void TaskComponentRendersCorrectly()
     {
         // Arrange
-        var task = new TaskState(Guid.NewGuid(), "Task1", "Descr", false);
+        var task = new TaskState(Guid.NewGuid(), "Task1", "Descr", true, false);
         var stage1 = new StageState(Guid.NewGuid(), "Stage1", new Dictionary<Guid, TaskState> { { task.Id, task } });
         var board = new BoardState(Guid.NewGuid(), "Board1", new Dictionary<Guid, StageState> { { stage1.Id, stage1 } });
         var initialState = new BoardsState(false, new Dictionary<Guid, BoardState> { { board.Id, board } }, board.Id);

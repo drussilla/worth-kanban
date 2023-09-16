@@ -20,16 +20,16 @@ namespace KanbanBoard.Server.Controllers
             this.logger = logger;
         }
 
-        [HttpPost]
-        public async Task Create(CreateStageCommand command, CancellationToken token) 
+        [HttpPatch("{id:guid}")]
+        public async Task UpdateOrCreate(Guid id, UpdateOrCreateStageCommand command, CancellationToken token)
         {
             if (!command.IsValid())
             {
-                logger.LogError($"Invalid command to create stage!");
+                logger.LogError($"Invalid command to update task {id}!");
                 throw new ArgumentException("Command object is not valid");
             }
 
-            await stageRepository.CreateStageAsync(command.Id, command.BoardId, command.Title, token);
+            await stageRepository.CreateOrUpdateStageAsync(id, command.BoardId, command.Name, token);
         }
 
         [HttpDelete("{id:guid}")]

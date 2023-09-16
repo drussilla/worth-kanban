@@ -16,6 +16,25 @@ namespace KanbanBoard.Client.Store.StageUseCase
             this.logger = logger;
         }
 
+        [EffectMethod]
+        public async Task HandleSaveStageAction(SaveStageAction action, IDispatcher dispatcher)
+        {
+            try
+            {
+                await boardService.UpdateOrCreateStageAsync(action.Id, action.BoardId, action.Name);
+                dispatcher.Dispatch(new SavedStageAction(action.Id));
+            }
+            catch (AccessTokenNotAvailableException exception)
+            {
+                logger.LogError(exception, "Token is not valid. Redirecting to login");
+                exception.Redirect();
+            }
+            catch (Exception exception)
+            {
+                logger.LogError(exception, "Unexpected error. Rethrowing");
+                throw;
+            }
+        }
 
         [EffectMethod]
         public async Task HandleDeleteStagekAction(DeleteStageAction action, IDispatcher dispatcher)

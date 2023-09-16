@@ -9,7 +9,7 @@ namespace KanbanBoard.Client.Store.TaskUseCase
         public static BoardsState ReduceAddTaskAction(BoardsState state, AddTaskAction action)
         {
             var id = Guid.NewGuid();
-            state.Boards[state.SelectedBoard!.Value].Stages[action.StageId].Tasks.Add(id, new TaskState(id, string.Empty, string.Empty, true));
+            state.Boards[state.SelectedBoard!.Value].Stages[action.StageId].Tasks.Add(id, new TaskState(id, string.Empty, string.Empty, false, true));
             return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard);
         }
 
@@ -47,7 +47,7 @@ namespace KanbanBoard.Client.Store.TaskUseCase
         public static BoardsState ReduceEditTaskAction(BoardsState state, EditTaskAction action)
         {
             var taskState = state.Boards[state.SelectedBoard!.Value].Stages[action.StageId].Tasks[action.TaskId];
-            state.Boards[state.SelectedBoard!.Value].Stages[action.StageId].Tasks[action.TaskId] = new TaskState(taskState.Id, taskState.Title, taskState.Description, true);
+            state.Boards[state.SelectedBoard!.Value].Stages[action.StageId].Tasks[action.TaskId] = new TaskState(taskState.Id, taskState.Title, taskState.Description, taskState.IsPersistent, true);
             return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard);
         }
 
@@ -55,7 +55,17 @@ namespace KanbanBoard.Client.Store.TaskUseCase
         public static BoardsState ReduceCancelTaskEditAction(BoardsState state, CancelTaskEditAction action)
         {
             var taskState = state.Boards[state.SelectedBoard!.Value].Stages[action.StageId].Tasks[action.TaskId];
-            state.Boards[state.SelectedBoard!.Value].Stages[action.StageId].Tasks[action.TaskId] = new TaskState(taskState.Id, taskState.Title, taskState.Description, false);
+            // If this task is already saved in the DB, lets just cancel editing
+            if (taskState.IsPersistent)
+            {
+                state.Boards[state.SelectedBoard!.Value].Stages[action.StageId].Tasks[action.TaskId] = new TaskState(taskState.Id, taskState.Title, taskState.Description, taskState.IsPersistent, false);
+            }
+            // Otherwise just remove it for state
+            else
+            {
+                state.Boards[state.SelectedBoard!.Value].Stages[action.StageId].Tasks.Remove(action.TaskId);
+            }
+            
             return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard);
         }
 
@@ -63,7 +73,15 @@ namespace KanbanBoard.Client.Store.TaskUseCase
         public static BoardsState ReduceSaveTaskAction(BoardsState state, SaveTaskAction action)
         {
             var taskState = state.Boards[state.SelectedBoard!.Value].Stages[action.StageId].Tasks[action.TaskId];
-            state.Boards[state.SelectedBoard!.Value].Stages[action.StageId].Tasks[action.TaskId] = new TaskState(taskState.Id, action.Title, action.Description, false);
+            state.Boards[state.SelectedBoard!.Value].Stages[action.StageId].Tasks[action.TaskId] = new TaskState(taskState.Id, action.Title, action.Description, taskState.IsPersistent, false);
+            return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard);
+        }
+
+        [ReducerMethod]
+        public static BoardsState ReduceSavedTaskAction(BoardsState state, SavedTaskAction action)
+        {
+            var taskState = state.Boards[state.SelectedBoard!.Value].Stages[action.StageId].Tasks[action.TaskId];
+            state.Boards[state.SelectedBoard!.Value].Stages[action.StageId].Tasks[action.TaskId] = new TaskState(taskState.Id, taskState.Title, taskState.Description, true, false);
             return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard);
         }
 

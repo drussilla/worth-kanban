@@ -11,4 +11,6 @@
     public record DeleteTaskAction(Guid TaskId, Guid StageId);
 
     public record SaveTaskAction(Guid TaskId, Guid StageId, Guid BoardId, string Title, string Description);
+
+    public record SavedTaskAction(Guid TaskId, Guid StageId);
 }

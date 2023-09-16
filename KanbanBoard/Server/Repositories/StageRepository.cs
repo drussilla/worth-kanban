@@ -19,7 +19,21 @@ namespace KanbanBoard.Server.Repositories
             this.logger = logger;
         }
 
-        public async System.Threading.Tasks.Task CreateStageAsync(Guid id, Guid boardId, string title, CancellationToken token)
+        public async System.Threading.Tasks.Task CreateOrUpdateStageAsync(Guid id, Guid boardId, string name, CancellationToken token)
+        {
+            var existingStage = await context.Stages.FirstOrDefaultAsync(x => x.Id == id, token);
+            if (existingStage != null)
+            {
+                existingStage.Name = name;
+                await context.SaveChangesAsync(token);
+            }
+            else
+            {
+                await CreateStage(id, boardId, name, token);
+            }
+        }
+
+        private async System.Threading.Tasks.Task CreateStage(Guid id, Guid boardId, string title, CancellationToken token)
         {
             // Get the highest order to create new stage at the end
             var maxStageOrderInBoard = await context
@@ -29,7 +43,7 @@ namespace KanbanBoard.Server.Repositories
                 .DefaultIfEmpty()
                 .MaxAsync(token);
 
-            uint order = maxStageOrderInBoard == 0 
+            uint order = maxStageOrderInBoard == 0
                 ? orderGenerator.GenerateIntialOrder()
                 : orderGenerator.GenerateOrder(maxStageOrderInBoard);
 

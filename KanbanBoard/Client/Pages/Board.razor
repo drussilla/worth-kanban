@@ -1,6 +1,7 @@
 ﻿@page "/board/{id:guid}"
 @using Fluxor;
 @using KanbanBoard.Client.Store.BoardUseCase;
+@using KanbanBoard.Client.Store.StageUseCase;
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using KanbanBoard.Shared
@@ -23,6 +24,7 @@
             {
                 <StageComponent StageId="@stage.Id" />
             }
+            <button class="add-stage btn btn-primary" @onclick="AddStage"><span class="oi oi-plus" aria-hidden="true"></span></button>
         </div>
     }
 
@@ -45,4 +47,9 @@
     }
 
     private string BoardName => State.Value.SelectedBoard == null ? "Loading board..." : State.Value.GetSelectedBoard?.Name!;
+
+    private void AddStage()
+    {
+        Dispatcher.Dispatch(new AddStageAction(Id));
+    }
 }

@@ -10,7 +10,7 @@ namespace KanbanBoard.Client.UnitTests.Store.TaskUseCase
         public void ReduceMoveTaskAction_ShouldMoveTaskToNewStage()
         {
             // Arrange
-            var task = new TaskState(Guid.NewGuid(), "Task1", "Descr", false);
+            var task = new TaskState(Guid.NewGuid(), "Task1", "Descr", true, false);
             var stage1 = new StageState(Guid.NewGuid(), "Stage1", new Dictionary<Guid, TaskState> { { task.Id, task } });
             var stage2 = new StageState(Guid.NewGuid(), "Stage2", new Dictionary<Guid, TaskState>());
             var board = new BoardState(Guid.NewGuid(), "Board1", new Dictionary<Guid, StageState> { { stage1.Id, stage1 }, { stage2.Id, stage2 } });

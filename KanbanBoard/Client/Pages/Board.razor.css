@@ -5,3 +5,9 @@
 .stage-wrapper {
     margin-right: 1px;
 }
+
+.add-stage {
+    flex-basis: content;
+    height: fit-content;
+    margin-left: 1rem;
+}

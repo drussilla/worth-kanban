@@ -20,8 +20,8 @@ namespace KanbanBoard.Client.Store.TaskUseCase
         {
             try
             {
-                // I use fire and forget here, to save some time on development, in prod I would handle result and dispatched another action to update the state accordingly
-                await boardService.UpdateTaskAsync(action.TaskId, action.StageId, action.BoardId, action.Title, action.Description);
+                await boardService.UpdateOrCreateTaskAsync(action.TaskId, action.StageId, action.BoardId, action.Title, action.Description);
+                dispatcher.Dispatch(new SavedTaskAction(action.TaskId, action.StageId));
             }
             catch (AccessTokenNotAvailableException exception)
             {

@@ -69,7 +69,7 @@ namespace KanbanBoard.Client.UnitTests.Store.TaskUseCase
 
             // Assert
             serviceMock.Verify(
-                x => x.UpdateTaskAsync(taskId, stageId, boardId, title, description),
+                x => x.UpdateOrCreateTaskAsync(taskId, stageId, boardId, title, description),
                 Times.Once);
         }
     }
