@@ -4,11 +4,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KanbanBoard.Server.Data
 {
-    public interface IDbIntitlizer
-    {
-        void Initialize();
-    }
-
     public class DbInitializer : IDbIntitlizer
     {
         private readonly ApplicationDbContext context;

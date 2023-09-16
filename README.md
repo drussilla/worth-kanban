@@ -1,5 +1,5 @@
 [![CI](https://github.com/drussilla/worth-kanban/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/drussilla/worth-kanban/actions/workflows/ci.yml)
-[![Tests](https://github.com/drussilla/worth-kanban/actions/workflows/test-report.yml/badge.svg?branch=main)](https://github.com/drussilla/worth-kanban/actions/workflows/test-report.yml)
+[![Test Report](https://github.com/drussilla/worth-kanban/actions/workflows/test-report.yml/badge.svg)](https://github.com/drussilla/worth-kanban/actions/workflows/test-report.yml)
 
 Welcome to Ivan's test assignment!
 
@@ -41,10 +41,10 @@ during a second interview
 - [x] Task add/edit/delete/move
 - [x] Stage management
 - [x] Board management
-- [ ] Add Docker support
+- [x] Add Docker support
 - [x] Add GitHub CI integration
 - [x] Add Production instructions
-- [ ] Polishing UI and Backend
+- [x] Polishing UI and Backend
 
 # Assumptions, Design and Architecture
 
@@ -153,7 +153,7 @@ dotnet publish -c Release .\KanbanBoard\KanbanBoard.sln
 * Add support for images, rich text, markdown
 * Add support for task reordering inside singe Stage
 * Add support for Stage reordering
-* Add uspport for Board reordering
+* Add support for Board reordering
 * Extend error handling logic
 * Extend logging
 
