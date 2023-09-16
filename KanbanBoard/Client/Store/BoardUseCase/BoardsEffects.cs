@@ -1,18 +1,20 @@
 ﻿using Fluxor;
 using KanbanBoard.Client.Services;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
-using System.Threading.Tasks.Dataflow;
 
 namespace KanbanBoard.Client.Store.BoardUseCase
 {
     public class BoardsEffects
     {
         private readonly IBoardService boardService;
+        private readonly NavigationManager navigationManager;
         private readonly ILogger<BoardsEffects> logger;
 
-        public BoardsEffects(IBoardService boardService, ILogger<BoardsEffects> logger)
+        public BoardsEffects(IBoardService boardService, NavigationManager navigationManager, ILogger<BoardsEffects> logger)
         {
             this.boardService = boardService;
+            this.navigationManager = navigationManager;
             this.logger = logger;
         }
 
@@ -54,6 +56,12 @@ namespace KanbanBoard.Client.Store.BoardUseCase
                 logger.LogError(exception, "Unexpected error. Rethrowing");
                 throw;
             }
+        }
+
+        [EffectMethod]
+        public async Task HandleAddBoardResultAction(AddBoardResultAction action, IDispatcher dispatcher)
+        {
+            navigationManager.NavigateTo($"/board/{action.Board.Id}");
         }
     }
 

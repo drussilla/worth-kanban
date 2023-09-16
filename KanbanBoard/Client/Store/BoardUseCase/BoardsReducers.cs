@@ -29,11 +29,11 @@ namespace KanbanBoard.Client.Store.BoardUseCase
         }
 
         [ReducerMethod]
-        public static BoardsState ReduceCanbceEditBoardAction(BoardsState state, CancelEditBoardAction action) =>
+        public static BoardsState ReduceCancelEditBoardAction(BoardsState state, CancelEditBoardAction action) =>
             new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard, false);
 
         [ReducerMethod]
-        public static BoardsState ReduceCAction(BoardsState state, AddBoardResultAction action)
+        public static BoardsState ReduceAddBoardResultAction(BoardsState state, AddBoardResultAction action)
         {
             state.Boards.Add(action.Board.Id, new BoardState(action.Board));
             return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard, false);
