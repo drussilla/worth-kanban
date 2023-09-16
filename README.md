@@ -1,4 +1,4 @@
-[![.NET](https://github.com/drussilla/worth-kanban/actions/workflows/dotnet.yml/badge.svg)](https://github.com/drussilla/worth-kanban/actions/workflows/dotnet.yml)
+[![Build](https://github.com/drussilla/worth-kanban/actions/workflows/ci.yml/badge.svg)](https://github.com/drussilla/worth-kanban/actions/workflows/ci.yml)
 
 Welcome to Ivan's test assignment!
 
