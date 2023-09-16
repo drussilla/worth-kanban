@@ -19,6 +19,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KanbanBoard.Server.Intergat
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A14C9939-BB57-4EFF-9173-87C9E0983056}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{3F9FDEA8-D789-42DB-84FC-59E8D594F73B}"
+	ProjectSection(SolutionItems) = preProject
+		Client-Dockerfile = Client-Dockerfile
+		docker-compose.yml = docker-compose.yml
+		nginx.conf = nginx.conf
+		Server-Dockerfile = Server-Dockerfile
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
