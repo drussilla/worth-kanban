@@ -19,5 +19,5 @@ jobs:
       with:
         artifact: test-results
         name: TRX Tests
-        path: KanbanBoard/Tests/*/TestResults/test-results.trx
+        path: */TestResults/test-results.trx
         reporter: dotnet-trx
