@@ -156,4 +156,5 @@ dotnet publish -c Release .\KanbanBoard\KanbanBoard.sln
 * Add support for Board reordering
 * Extend error handling logic
 * Extend logging
+* Impove documentation
 
