@@ -31,5 +31,5 @@ jobs:
       if: success() || failure()
       with:
         name: TRX Tests
-        path: Tests/*/TestResults/test-results.trx
+        path: KanbanBoard/Tests/*/TestResults/test-results.trx
         reporter: dotnet-trx
