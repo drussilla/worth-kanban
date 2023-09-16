@@ -1,4 +1,5 @@
-[![Build](https://github.com/drussilla/worth-kanban/actions/workflows/ci.yml/badge.svg)](https://github.com/drussilla/worth-kanban/actions/workflows/ci.yml)
+[![CI](https://github.com/drussilla/worth-kanban/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/drussilla/worth-kanban/actions/workflows/ci.yml)
+[![Tests](https://github.com/drussilla/worth-kanban/actions/workflows/test-report.yml/badge.svg?branch=main)](https://github.com/drussilla/worth-kanban/actions/workflows/test-report.yml)
 
 Welcome to Ivan's test assignment!
 
