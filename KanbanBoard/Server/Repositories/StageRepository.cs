@@ -47,6 +47,14 @@ namespace KanbanBoard.Server.Repositories
             await context.SaveChangesAsync(token);
         }
 
+        public async System.Threading.Tasks.Task DeleteStage(Guid id, CancellationToken token)
+        {
+            // I relly on DB contexts to thorw an error if task is not in the repo. This logic can be moved one lever higher for a proper handling.
+            var stage = await context.Stages.FirstAsync(t => t.Id == id, token);
+            context.Stages.Remove(stage);
+            await context.SaveChangesAsync(token);
+        }
+
         public System.Threading.Tasks.Task UpdateTitleAsync(Guid id, string title, CancellationToken token)
         {
             throw new NotImplementedException();

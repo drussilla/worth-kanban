@@ -1,30 +1,9 @@
-﻿using KanbanBoard.Client.Pages;
-using KanbanBoard.Shared;
+﻿using KanbanBoard.Shared;
 using KanbanBoard.Shared.Commands;
 using System.Net.Http.Json;
 
 namespace KanbanBoard.Client.Services
 {
-    /// <summary>
-    /// Wrapper around API endponts. This could be splitted in to separate services for Tasks, Boards and Stages.
-    /// </summary>
-    public interface IBoardService 
-    {
-        /// <summary>
-        /// Gets list of all boards, related Stages and Tasks
-        /// </summary>
-        /// <returns></returns>
-        Task<IEnumerable<BoardDto>> GetBoardsAsync();
-
-        /// <summary>
-        /// Update task with new title and description
-        /// </summary>
-        Task UpdateTaskAsync(Guid id, Guid stageId, Guid boardId, string title, string description);
-
-        Task MoveTaskToStageAsync(Guid id, Guid stageId);
-        Task DeleteTaskAsync(Guid taskId);
-    }
-
     public class BoardsService : IBoardService
     {
         private readonly HttpClient httpClient;
@@ -32,6 +11,11 @@ namespace KanbanBoard.Client.Services
         public BoardsService(HttpClient httpClient) 
         {
             this.httpClient = httpClient;
+        }
+
+        public async Task DeleteStageAsync(Guid stageId)
+        {
+            await httpClient.DeleteAsync($"api/stage/{stageId}");
         }
 
         public async Task DeleteTaskAsync(Guid taskId)

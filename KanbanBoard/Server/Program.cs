@@ -35,6 +35,9 @@ builder.Services
 
 // Add local services
 builder.Services
+    .AddScoped<IDbIntitlizer, DbInitializer>();
+
+builder.Services
     .AddScoped<IBoardRepository, BoardRepository>();
 builder.Services
     .AddScoped<ITaskRepository, TaskRepository>();
@@ -85,8 +88,8 @@ static void CreateDbIfNotExists(IHost host)
     var services = scope.ServiceProvider;
     try
     {
-        using var context = services.GetRequiredService<ApplicationDbContext>();
-        DbInitializer.Initialize(context);
+        var initializer = services.GetRequiredService<IDbIntitlizer>();
+        initializer.Initialize();
     }
     catch (Exception ex)
     {

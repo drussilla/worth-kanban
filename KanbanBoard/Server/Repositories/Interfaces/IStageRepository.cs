@@ -11,5 +11,10 @@
         /// Create new stage with <paramref name="title"/> inside board with <paramref name="boardId"/>
         /// </summary>
         Task CreateStageAsync(Guid id, Guid boardId, string title, CancellationToken token);
+        
+        /// <summary>
+        /// Deletes Stage from DB
+        /// </summary>
+        Task DeleteStage(Guid id, CancellationToken token);
     }
 }

@@ -1,4 +1,5 @@
-﻿using KanbanBoard.Server.Repositories.Interfaces;
+﻿using KanbanBoard.Server.Repositories;
+using KanbanBoard.Server.Repositories.Interfaces;
 using KanbanBoard.Shared.Commands;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +30,12 @@ namespace KanbanBoard.Server.Controllers
             }
 
             await stageRepository.CreateStageAsync(command.Id, command.BoardId, command.Title, token);
+        }
+
+        [HttpDelete("{id:guid}")]
+        public async Task Delete(Guid id, CancellationToken token)
+        {
+            await stageRepository.DeleteStage(id, token);
         }
     }
 }
