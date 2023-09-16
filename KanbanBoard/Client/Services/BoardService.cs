@@ -54,7 +54,7 @@ namespace KanbanBoard.Client.Services
 
         public async Task UpdateTaskAsync(Guid id, Guid stageId, Guid boardId, string title, string description)
         {
-            await httpClient.PatchAsJsonAsync($"api/task/{id}", new PatchOrCreateTaskCommand 
+            await httpClient.PatchAsJsonAsync($"api/task/{id}", new UpdateOrCreateTaskCommand 
             {
                 StageId = stageId,
                 BoardId = boardId,

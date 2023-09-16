@@ -1,7 +1,7 @@
 ﻿using Castle.Core.Logging;
 using FluentAssertions;
 using KanbanBoard.Server.Controllers;
-using KanbanBoard.Server.Repositories;
+using KanbanBoard.Server.Repositories.Interfaces;
 using KanbanBoard.Shared.Commands;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -18,17 +18,17 @@ namespace KanbanBoard.Server.UnitTests.Controllers
             var repoMock = new Mock<ITaskRepository>();
             var logger = new Mock<ILogger<TaskController>>();
             var sut = new TaskController(repoMock.Object, logger.Object);
-            var invalidCommand = new PatchOrCreateTaskCommand() { Title = string.Empty };
+            var invalidCommand = new UpdateOrCreateTaskCommand() { Title = string.Empty };
 
             // Act  
-            Func<Task> act =  async () => await sut.PatchOrCreate(Guid.NewGuid(), invalidCommand, CancellationToken.None);
+            Func<Task> act =  async () => await sut.UpdateOrCreate(Guid.NewGuid(), invalidCommand, CancellationToken.None);
 
             // Assert
             await act.Should().ThrowAsync<ArgumentException>();
             repoMock.Verify(x => 
-                x.PatchOrCreateTask(
+                x.UpdateOrCreateTask(
                     It.IsAny<Guid>(),
-                    It.IsAny<PatchOrCreateTaskCommand>(),
+                    It.IsAny<UpdateOrCreateTaskCommand>(),
                     It.IsAny<CancellationToken>()),
                 Times.Never);
         }
@@ -40,15 +40,15 @@ namespace KanbanBoard.Server.UnitTests.Controllers
             var repoMock = new Mock<ITaskRepository>();
             var logger = new Mock<ILogger<TaskController>>();
             var sut = new TaskController(repoMock.Object, logger.Object);
-            var validCommand = new PatchOrCreateTaskCommand() { Title = "Valid" };
+            var validCommand = new UpdateOrCreateTaskCommand() { Title = "Valid" };
             var taskId = Guid.NewGuid();
 
             // Act  
-            await sut.PatchOrCreate(taskId, validCommand, CancellationToken.None);
+            await sut.UpdateOrCreate(taskId, validCommand, CancellationToken.None);
 
             // Assert
             repoMock.Verify(x =>
-                x.PatchOrCreateTask(
+                x.UpdateOrCreateTask(
                     taskId,
                     validCommand,
                     CancellationToken.None),

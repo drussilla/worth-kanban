@@ -1,4 +1,4 @@
-using KanbanBoard.Server.Repositories;
+using KanbanBoard.Server.Repositories.Interfaces;
 using KanbanBoard.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

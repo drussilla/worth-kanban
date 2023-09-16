@@ -1,6 +1,6 @@
 ﻿namespace KanbanBoard.Shared.Commands
 {
-    public class PatchOrCreateTaskCommand
+    public class UpdateOrCreateTaskCommand
     {
         public Guid StageId { get; set; }
         public Guid BoardId { get; set; }

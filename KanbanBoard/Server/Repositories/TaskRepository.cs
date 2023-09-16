@@ -1,59 +1,42 @@
 ﻿using KanbanBoard.Server.Data;
+using KanbanBoard.Server.Repositories.Interfaces;
 using KanbanBoard.Shared.Commands;
 using Microsoft.EntityFrameworkCore;
 
 namespace KanbanBoard.Server.Repositories
 {
-    public interface ITaskRepository
-    {
-        /// <summary>
-        /// Patch task if it exists, create new if not. This can be separated, but for the assignment purpuse I left it combined.
-        /// </summary>
-        Task PatchOrCreateTask(Guid id, PatchOrCreateTaskCommand command, CancellationToken token);
-
-        /// <summary>
-        /// Move task to a new Stage
-        /// </summary>
-        Task MoveTask(Guid id, Guid newStageId, CancellationToken token);
-        
-        /// <summary>
-        /// Delete task from the repository.
-        /// </summary>
-        Task DeleteTask(Guid id, CancellationToken token);
-    }
-
     public class TaskRepository : ITaskRepository
     {
-        private readonly ApplicationDbContext _context;
-        private readonly ILogger<TaskRepository> _logger;
+        private readonly ApplicationDbContext context;
+        private readonly ILogger<TaskRepository> logger;
 
         public TaskRepository(ApplicationDbContext context, ILogger<TaskRepository> logger)
         {
-            _context = context;
-            _logger = logger;
+            this.context = context;
+            this.logger = logger;
         }
 
         public async Task DeleteTask(Guid id, CancellationToken token)
         {
             // I relly on DB contexts to thorw an error if task is not in the repo. This logic can be moved one lever higher for a property handling.
-            var task = await _context.Tasks.FirstAsync(t => t.Id == id, token);
-            _context.Tasks.Remove(task);
-            await _context.SaveChangesAsync(token);
+            var task = await context.Tasks.FirstAsync(t => t.Id == id, token);
+            context.Tasks.Remove(task);
+            await context.SaveChangesAsync(token);
         }
 
         public async Task MoveTask(Guid id, Guid newStageId, CancellationToken token)
         {
-            var task = await _context.Tasks.FirstAsync(t => t.Id == id, token);
+            var task = await context.Tasks.FirstAsync(t => t.Id == id, token);
             task.StageId = newStageId; 
-            await _context.SaveChangesAsync(token);
+            await context.SaveChangesAsync(token);
         }
 
-        public async Task PatchOrCreateTask(Guid id, PatchOrCreateTaskCommand command, CancellationToken token)
+        public async Task UpdateOrCreateTask(Guid id, UpdateOrCreateTaskCommand command, CancellationToken token)
         {
-            var task = await _context.Tasks.FirstOrDefaultAsync(t => t.Id == id, token);
+            var task = await context.Tasks.FirstOrDefaultAsync(t => t.Id == id, token);
             if (task == default)
             {
-                _logger.LogInformation("Task doesn't exists. Creating new one.");
+                logger.LogInformation("Task doesn't exists. Creating new one.");
                 task = new Models.Task()
                 {
                     Id = id,
@@ -62,7 +45,7 @@ namespace KanbanBoard.Server.Repositories
                     Title = command.Title,
                     Description = command.Description
                 };
-                _context.Tasks.Add(task);
+                context.Tasks.Add(task);
             }
             else 
             {
@@ -70,7 +53,7 @@ namespace KanbanBoard.Server.Repositories
                 task.Description = command.Description;
             }
 
-            await _context.SaveChangesAsync(token);
+            await context.SaveChangesAsync(token);
         }
     }
 }

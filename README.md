@@ -51,6 +51,7 @@ during a second interview
 * Configuration is done via `appsettings.json` file.
 * To simplify development, Backend is also responsible for serving Frontend files (wasm DLLs, index.htm and related js and css files), but they can be easily decoupled and shipped as a separate apps.
 * Any frontend app can be used with provided Backend since they are loosely coupled.
+* I have implemeted different types of automated tests in this project (please see Testing section). But I didn't cover all cases with these tests to save some time on developments. They are here to show the general approach to testing rather than cover 100% of code (which should be done in the production system)
 
 ## Backend
 
@@ -63,6 +64,7 @@ during a second interview
 
 * Frontend is a Blazor WebAssembly app that is communicating with the backend via HTTP API.
 * Frontend app is using Redux pattern to manage internal state.
+* Frontend is using Component-based architecture
 * Communication with the backend and internal data models are separated from the rest of the UI.
 
 # Dependencies and third-party libraries
@@ -117,13 +119,14 @@ Since I had a limited time implmeneting this assignment, I didn't want to achive
 * KanbanBoard.Server.UnitTests - Backend unit tests 
 * KanbanBoard.Client.UnitTests - Client unit tests 
 * KanbanBoard.Server.ComponentTests - Client component tests
+* KanbanBoard.Server.IntegrationTests - Backend tests for various intergation, e.g. testing of the database layer
 
 To run tests simply execute in the root forlder:
 ```
 dotnet test
 ```
 
-_Note_: I didn't include any end-to-end, integration or performance tests since I had a limited time for this assignment.
+_Note_: I didn't include any end-to-end or performance tests since I had a limited time for this assignment but they should be considered for the production system.
 
 # Production
 

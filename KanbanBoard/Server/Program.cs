@@ -1,6 +1,8 @@
 using KanbanBoard.Server.Data;
 using KanbanBoard.Server.Models;
 using KanbanBoard.Server.Repositories;
+using KanbanBoard.Server.Repositories.Interfaces;
+using KanbanBoard.Server.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 
@@ -36,6 +38,11 @@ builder.Services
     .AddScoped<IBoardRepository, BoardRepository>();
 builder.Services
     .AddScoped<ITaskRepository, TaskRepository>();
+builder.Services
+    .AddScoped<IStageRepository, StageRepository>();
+builder.Services
+    .AddScoped<IStageOrderGenerator, StageOrderGenerator>();
+
 
 var app = builder.Build();
 

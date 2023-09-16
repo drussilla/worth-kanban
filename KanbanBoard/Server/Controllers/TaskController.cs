@@ -1,4 +1,4 @@
-using KanbanBoard.Server.Repositories;
+using KanbanBoard.Server.Repositories.Interfaces;
 using KanbanBoard.Shared.Commands;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,15 +20,15 @@ namespace KanbanBoard.Server.Controllers
         }
 
         [HttpPatch("{id:guid}")]
-        public async Task PatchOrCreate(Guid id, PatchOrCreateTaskCommand command, CancellationToken token)
+        public async Task UpdateOrCreate(Guid id, UpdateOrCreateTaskCommand command, CancellationToken token)
         {
             if (!command.IsValid())
             {
-                logger.LogError($"Invalid command to patch task {id}!");
-                throw new ArgumentException("Patch object is not valid");
+                logger.LogError($"Invalid command to update task {id}!");
+                throw new ArgumentException("Command object is not valid");
             }
 
-            await taskRepository.PatchOrCreateTask(id, command, token);
+            await taskRepository.UpdateOrCreateTask(id, command, token);
         }
 
         [HttpPost("{id:guid}/move")]
