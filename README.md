@@ -107,7 +107,7 @@ You can just open Visual Studio or Rider and start `KanbanBoard.Server` project.
 or just
 
 ```
-dotnet run --project .\Server\KanbanBoard.Server.csproj
+dotnet run --project .\KanbanBoard\Server\KanbanBoard.Server.csproj
 ```
 
 and open `https://localhost:7185` in the browser
@@ -128,7 +128,7 @@ Since I had a limited time implmeneting this assignment, I didn't want to achive
 
 To run tests simply execute in the root forlder:
 ```
-dotnet test
+dotnet test .\KanbanBoard\KanbanBoard.sln
 ```
 
 _Note_: I didn't include any end-to-end or performance tests since I had a limited time for this assignment but they should be considered for the production system.
@@ -140,6 +140,11 @@ Even though this is a test assignment, this project could be adapted to a produc
 - Add APM and RUM to monitor application and user behaviour
 - Add Deployment scripts to support multiple environments (Dev, QA, Staging, Prod)
 - Add Terraform to have infrastructure as a code in the project
+
+You can create a distributable package by running
+```
+dotnet publish -c Release .\KanbanBoard\KanbanBoard.sln
+```
 
 # Future Impovements
 
