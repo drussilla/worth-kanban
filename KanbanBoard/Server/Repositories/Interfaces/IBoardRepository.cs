@@ -18,5 +18,10 @@ namespace KanbanBoard.Server.Repositories.Interfaces
         /// Get board by id 
         /// </summary>
         Task<Board> GetAsync(Guid id, CancellationToken token);
+        
+        /// <summary>
+        /// Update boards name
+        /// </summary>
+        System.Threading.Tasks.Task UpdateNameAsync(Guid id, string name, CancellationToken token);
     }
 }

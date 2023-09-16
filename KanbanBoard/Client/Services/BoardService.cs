@@ -1,4 +1,5 @@
-﻿using KanbanBoard.Shared;
+﻿using KanbanBoard.Client.Pages;
+using KanbanBoard.Shared;
 using KanbanBoard.Shared.Requests;
 using System.Net.Http.Json;
 
@@ -50,6 +51,14 @@ namespace KanbanBoard.Client.Services
             await httpClient.PostAsJsonAsync($"api/task/{id}/move", new MoveTaskRequest
             {
                 NewStageId = stageId
+            });
+        }
+
+        public async Task UpdateBoardAsync(Guid id, string name)
+        {
+            await httpClient.PatchAsJsonAsync($"api/board/{id}", new UpdateBoardRequest
+            {
+                Name = name,
             });
         }
 

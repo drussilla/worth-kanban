@@ -36,5 +36,27 @@ namespace KanbanBoard.Server.UnitTests.Controllers
             result.Stages.Should().HaveCount(1);
             result.Stages.First().Name.Should().Be("Test");
         }
+
+        [Fact]
+        public async Task Update_ShouldThrowException_WhenCommandIsNotValid()
+        {
+            // Arrange
+            var repoMock = new Mock<IBoardRepository>();
+            var logger = new Mock<ILogger<BoardController>>();
+            var sut = new BoardController(repoMock.Object, logger.Object);
+            var invalidCommand = new UpdateBoardRequest() { Name = string.Empty };
+
+            // Act  
+            Func<Task> act = async () => await sut.Update(Guid.NewGuid(), invalidCommand, CancellationToken.None);
+
+            // Assert
+            await act.Should().ThrowAsync<ArgumentException>();
+            repoMock.Verify(x =>
+                x.UpdateNameAsync(
+                    It.IsAny<Guid>(),
+                    It.IsAny<string>(),
+                    It.IsAny<CancellationToken>()),
+                Times.Never);
+        }
     }
 }

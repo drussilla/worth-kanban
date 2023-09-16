@@ -67,5 +67,17 @@ namespace KanbanBoard.Server.Controllers
                 }).ToList()
             };
         }
+
+        [HttpPatch("{id:guid}")]
+        public async Task Update(Guid id, UpdateBoardRequest request, CancellationToken token)
+        {
+            if (!request.IsValid())
+            {
+                logger.LogError($"Invalid command to update board!");
+                throw new ArgumentException("Command object is not valid");
+            }
+
+            await boardRepository.UpdateNameAsync(id, request.Name, token);
+        }
     }
 }

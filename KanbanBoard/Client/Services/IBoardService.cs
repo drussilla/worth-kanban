@@ -43,5 +43,10 @@ namespace KanbanBoard.Client.Services
         /// </summary>
         /// <returns>Board DTO</returns>
         Task<BoardDto> CreateBoard(string name);
+        
+        /// <summary>
+        /// Update board name
+        /// </summary>
+        Task UpdateBoardAsync(Guid id, string name);
     }
 }

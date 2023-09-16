@@ -57,5 +57,12 @@ namespace KanbanBoard.Server.Repositories
                 .ThenInclude(x => x.Tasks)
                 .FirstAsync(x => x.Id == id, token);
         }
+
+        public async System.Threading.Tasks.Task UpdateNameAsync(Guid id, string name, CancellationToken token)
+        {
+            var board = await context.Boards.FirstAsync(x => x.Id == id, token);
+            board.Name = name;
+            await context.SaveChangesAsync(token);
+        }
     }
 }

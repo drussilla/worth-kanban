@@ -59,6 +59,26 @@ namespace KanbanBoard.Client.Store.BoardUseCase
         }
 
         [EffectMethod]
+        public async Task HandleSaveBoardAction(SaveBoardAction action, IDispatcher dispatcher)
+        {
+            try
+            {
+                // I use fire and forget here, to save some time on development, in prod I would handle result and dispatched another action to update the state accordingly
+                await boardService.UpdateBoardAsync(action.Id, action.Name);
+            }
+            catch (AccessTokenNotAvailableException exception)
+            {
+                logger.LogError(exception, "Token is not valid. Redirecting to login");
+                exception.Redirect();
+            }
+            catch (Exception exception)
+            {
+                logger.LogError(exception, "Unexpected error. Rethrowing");
+                throw;
+            }
+        }
+
+        [EffectMethod]
         public async Task HandleAddBoardResultAction(AddBoardResultAction action, IDispatcher dispatcher)
         {
             navigationManager.NavigateTo($"/board/{action.Board.Id}");
