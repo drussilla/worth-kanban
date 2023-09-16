@@ -25,4 +25,11 @@ jobs:
     - name: Build
       run: dotnet build KanbanBoard/KanbanBoard.sln --no-restore
     - name: Test
-      run: dotnet test KanbanBoard/KanbanBoard.sln --no-build --verbosity normal
+      run: dotnet test KanbanBoard/KanbanBoard.sln --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx"
+    - name: Test Report
+      uses: dorny/test-reporter@v1
+      if: success() || failure()
+      with:
+        name: TRX Tests
+        path: Tests/*/TestResults/test-results.trx
+        reporter: dotnet-trx
