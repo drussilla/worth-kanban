@@ -3,6 +3,11 @@
 
 name: .NET
 
+permissions:
+  id-token: write
+  contents: read
+  checks: write
+
 on:
   push:
     branches: [ "main" ]
