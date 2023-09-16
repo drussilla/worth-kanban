@@ -27,8 +27,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Server\KanbanBoard.Server.csproj" />
-    <ProjectReference Include="..\Shared\KanbanBoard.Shared.csproj" />
+    <ProjectReference Include="..\..\Server\KanbanBoard.Server.csproj" />
+    <ProjectReference Include="..\..\Shared\KanbanBoard.Shared.csproj" />
   </ItemGroup>
 
 </Project>
