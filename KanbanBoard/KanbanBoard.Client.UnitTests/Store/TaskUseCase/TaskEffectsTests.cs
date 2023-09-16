@@ -1,4 +1,5 @@
-﻿using KanbanBoard.Client.Services;
+﻿using Fluxor;
+using KanbanBoard.Client.Services;
 using KanbanBoard.Client.Store.TaskUseCase;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -55,6 +56,7 @@ namespace KanbanBoard.Client.UnitTests.Store.TaskUseCase
             // Arrange
             var serviceMock = new Mock<IBoardService>();
             var loggerMock = new Mock<ILogger<TaskEffects>>();
+            var dispatcherMock = new Mock<IDispatcher>();
 
             var taskId = Guid.NewGuid();
             var stageId = Guid.NewGuid();
@@ -65,11 +67,15 @@ namespace KanbanBoard.Client.UnitTests.Store.TaskUseCase
             var sut = new TaskEffects(serviceMock.Object, loggerMock.Object);
 
             // Act
-            await sut.HandleSaveTaskAction(new SaveTaskAction(taskId, stageId, boardId, title, description), null);
+            await sut.HandleSaveTaskAction(new SaveTaskAction(taskId, stageId, boardId, title, description), dispatcherMock.Object);
 
             // Assert
             serviceMock.Verify(
                 x => x.UpdateOrCreateTaskAsync(taskId, stageId, boardId, title, description),
+                Times.Once);
+
+            dispatcherMock.Verify(
+                x => x.Dispatch(It.Is<SavedTaskAction>(x => x.TaskId == taskId && x.StageId == stageId)),
                 Times.Once);
         }
     }
