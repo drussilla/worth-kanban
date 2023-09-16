@@ -12,13 +12,13 @@ namespace KanbanBoard.Server.Data
     public class DbInitializer : IDbIntitlizer
     {
         private readonly ApplicationDbContext context;
-        private readonly IStageOrderGenerator orderGenerator;
+        private readonly IDefaultStagesProvider stagesProvider;
         private readonly ILogger<DbInitializer> logger;
 
-        public DbInitializer(ApplicationDbContext context, IStageOrderGenerator orderGenerator, ILogger<DbInitializer> logger)
+        public DbInitializer(ApplicationDbContext context, IDefaultStagesProvider stagesProvider, ILogger<DbInitializer> logger)
         {
             this.context = context;
-            this.orderGenerator = orderGenerator;
+            this.stagesProvider = stagesProvider;
             this.logger = logger;
         }
 
@@ -40,37 +40,11 @@ namespace KanbanBoard.Server.Data
                 Name = "Default Board",
             };
 
-            var order = orderGenerator.GenerateIntialOrder();
-            defaultBoard.Stages.Add(new Stage()
+            var stages = stagesProvider.GetDefaultStages();
+            foreach (var stage in stages)
             {
-                Id = Guid.NewGuid(),
-                Name = "Backlogs",
-                Order = order,
-            });
-
-            order = orderGenerator.GenerateOrder(order);
-            defaultBoard.Stages.Add(new Stage()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Planned",
-                Order = order
-            });
-
-            order = orderGenerator.GenerateOrder(order);
-            defaultBoard.Stages.Add(new Stage()
-            {
-                Id = Guid.NewGuid(),
-                Name = "In Progress",
-                Order = order
-            });
-
-            order = orderGenerator.GenerateOrder(order);
-            defaultBoard.Stages.Add(new Stage()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Completed",
-                Order = order
-            });
+                defaultBoard.Stages.Add(stage);
+            }
 
             context.Boards.Add(defaultBoard);
 

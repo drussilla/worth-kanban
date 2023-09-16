@@ -12,7 +12,19 @@
 
 <PageTitle>@BoardName</PageTitle>
 
-<h1>@BoardName</h1>
+<div class="d-flex">
+    @if (State.Value.IsEditing)
+    {
+        <TextInputReactive placeholder="Title" class="@((updatedName == string.Empty ? "form-control is-invalid" : "form-control"))" @bind-Value="updatedName" />
+        <button class="btn" @onclick="SaveEdit" disabled="@(updatedName == string.Empty)"><span class="oi oi-check" aria-hidden="true"></span></button>
+        <button class="btn" @onclick="CancelEdit"><span class="oi oi-x" aria-hidden="true"></span></button>
+    }
+    else
+    {
+        <h1>@BoardName</h1>
+        <button class="btn" @onclick="EditBoardName"><span class="oi oi-pencil" aria-hidden="true"></span></button>
+    }    
+</div>
 
 <div class="stage-container">
 
@@ -24,6 +36,7 @@
             {
                 <StageComponent StageId="@stage.Id" />
             }
+
             <button class="add-stage btn btn-primary" @onclick="AddStage"><span class="oi oi-plus" aria-hidden="true"></span></button>
         </div>
     }
@@ -41,9 +54,12 @@
     [Inject]
     public IDispatcher Dispatcher { get; set; }
 
+    private string updatedName;
+
     protected override void OnParametersSet()
     {
         Dispatcher.Dispatch(new SelectBoardAction(Id));
+        updatedName = BoardName;
     }
 
     private string BoardName => State.Value.SelectedBoard == null ? "Loading board..." : State.Value.GetSelectedBoard?.Name!;
@@ -51,5 +67,21 @@
     private void AddStage()
     {
         Dispatcher.Dispatch(new AddStageAction(Id));
+    }
+
+    private void EditBoardName()
+    {
+        Dispatcher.Dispatch(new EditBoardAction(Id));
+    }
+
+    private void SaveEdit()
+    {
+        Dispatcher.Dispatch(new SaveBoardAction(Id, updatedName));
+    }
+
+    private void CancelEdit()
+    {
+        updatedName = BoardName;
+        Dispatcher.Dispatch(new CancelEditBoardAction(Id));
     }
 }

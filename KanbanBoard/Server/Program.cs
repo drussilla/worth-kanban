@@ -45,6 +45,8 @@ builder.Services
     .AddScoped<IStageRepository, StageRepository>();
 builder.Services
     .AddScoped<IStageOrderGenerator, StageOrderGenerator>();
+builder.Services
+    .AddScoped<IDefaultStagesProvider, DefaultStagesProvider>();
 
 
 var app = builder.Build();

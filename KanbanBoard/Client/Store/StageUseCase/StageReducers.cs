@@ -11,7 +11,7 @@ namespace KanbanBoard.Client.Store.StageUseCase
         {
             var id = Guid.NewGuid();
             state.Boards[action.BoardId].Stages.Add(id, new StageState(id, string.Empty, new Dictionary<Guid, TaskState> (), isPersisted: false, isEditing: true));
-            return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard);
+            return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard, state.IsEditing);
         }
 
         [ReducerMethod]
@@ -19,7 +19,7 @@ namespace KanbanBoard.Client.Store.StageUseCase
         {
             var stageState = state.Boards[state.SelectedBoard!.Value].Stages[action.Id];
             state.Boards[state.SelectedBoard!.Value].Stages[action.Id] = new StageState(stageState.Id, action.Name, stageState.Tasks, isPersisted: stageState.IsPersisted, isEditing: false);
-            return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard);
+            return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard, state.IsEditing);
         }
 
         [ReducerMethod]
@@ -27,7 +27,7 @@ namespace KanbanBoard.Client.Store.StageUseCase
         {
             var stageState = state.Boards[state.SelectedBoard!.Value].Stages[action.Id];
             state.Boards[state.SelectedBoard!.Value].Stages[action.Id] = new StageState(stageState.Id, stageState.Name, stageState.Tasks, isPersisted: true, isEditing: false);
-            return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard);
+            return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard, state.IsEditing);
         }
 
         [ReducerMethod]
@@ -35,7 +35,7 @@ namespace KanbanBoard.Client.Store.StageUseCase
         {
             var stageState = state.Boards[state.SelectedBoard!.Value].Stages[action.Id];
             state.Boards[state.SelectedBoard!.Value].Stages[action.Id] = new StageState(stageState.Id, stageState.Name, stageState.Tasks, isPersisted: stageState.IsPersisted, isEditing: true);
-            return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard);
+            return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard, state.IsEditing);
         }
 
         [ReducerMethod]
@@ -53,7 +53,7 @@ namespace KanbanBoard.Client.Store.StageUseCase
                 state.Boards[state.SelectedBoard!.Value].Stages.Remove(action.Id);
             }
 
-            return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard);
+            return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard, state.IsEditing);
         }
 
         [ReducerMethod]
@@ -70,7 +70,7 @@ namespace KanbanBoard.Client.Store.StageUseCase
             }
 
             state.Boards[state.SelectedBoard!.Value].Stages.Remove(action.Id);
-            return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard);
+            return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard, state.IsEditing);
         }
     }
 }

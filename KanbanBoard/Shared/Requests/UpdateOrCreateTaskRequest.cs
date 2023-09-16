@@ -1,6 +1,6 @@
-﻿namespace KanbanBoard.Shared.Commands
+﻿namespace KanbanBoard.Shared.Requests
 {
-    public class UpdateOrCreateTaskCommand : IValidatable
+    public class UpdateOrCreateTaskRequest : IValidatable
     {
         public Guid StageId { get; set; }
         public Guid BoardId { get; set; }

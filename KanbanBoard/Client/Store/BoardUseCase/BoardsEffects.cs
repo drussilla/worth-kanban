@@ -1,6 +1,7 @@
 ﻿using Fluxor;
 using KanbanBoard.Client.Services;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+using System.Threading.Tasks.Dataflow;
 
 namespace KanbanBoard.Client.Store.BoardUseCase
 {
@@ -22,6 +23,26 @@ namespace KanbanBoard.Client.Store.BoardUseCase
             {
                 var boards = await boardService.GetBoardsAsync();
                 dispatcher.Dispatch(new FetchBoardsResultAction(boards));
+            }
+            catch (AccessTokenNotAvailableException exception)
+            {
+                logger.LogError(exception, "Token is not valid. Redirecting to login");
+                exception.Redirect();
+            }
+            catch (Exception exception)
+            {
+                logger.LogError(exception, "Unexpected error. Rethrowing");
+                throw;
+            }
+        }
+
+        [EffectMethod]
+        public async Task HandleAddBoardAction(AddBoardAction action, IDispatcher dispatcher)
+        {
+            try
+            {
+                var board = await boardService.CreateBoard(action.Name);
+                dispatcher.Dispatch(new AddBoardResultAction(board));
             }
             catch (AccessTokenNotAvailableException exception)
             {

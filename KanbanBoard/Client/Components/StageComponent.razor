@@ -71,6 +71,7 @@
 
     private void CancelEdit()
     {
+        updatedName = Stage.Name;
         Dispatcher.Dispatch(new CancelEditStageAction(StageId));
     }
 

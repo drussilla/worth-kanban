@@ -8,13 +8,16 @@ namespace KanbanBoard.Client.Store.BoardUseCase
     {
         private BoardsState() { }
 
-        public BoardsState(bool isLoading, IDictionary<Guid, BoardState> boards, Guid? selectedBoard)
+        public BoardsState(bool isLoading, IDictionary<Guid, BoardState> boards, Guid? selectedBoard, bool isEditing)
         {
             IsLoading = isLoading;
             Boards = boards;
             SelectedBoard = selectedBoard;
+            IsEditing = isEditing;
         }
         public bool IsLoading { get; } = true;
+
+        public bool IsEditing { get; }
 
         public IDictionary<Guid, BoardState> Boards { get; } = new Dictionary<Guid, BoardState>();
 

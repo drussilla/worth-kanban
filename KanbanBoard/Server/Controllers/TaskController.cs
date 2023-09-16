@@ -1,5 +1,5 @@
 using KanbanBoard.Server.Repositories.Interfaces;
-using KanbanBoard.Shared.Commands;
+using KanbanBoard.Shared.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,7 +20,7 @@ namespace KanbanBoard.Server.Controllers
         }
 
         [HttpPatch("{id:guid}")]
-        public async Task UpdateOrCreate(Guid id, UpdateOrCreateTaskCommand command, CancellationToken token)
+        public async Task UpdateOrCreate(Guid id, UpdateOrCreateTaskRequest command, CancellationToken token)
         {
             if (!command.IsValid())
             {
@@ -32,7 +32,7 @@ namespace KanbanBoard.Server.Controllers
         }
 
         [HttpPost("{id:guid}/move")]
-        public async Task Move(Guid id, MoveTaskCommand command, CancellationToken token)
+        public async Task Move(Guid id, MoveTaskRequest command, CancellationToken token)
         {
             await taskRepository.MoveTask(id, command.NewStageId, token);
         }

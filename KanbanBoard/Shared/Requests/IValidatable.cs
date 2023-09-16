@@ -1,4 +1,4 @@
-﻿namespace KanbanBoard.Shared.Commands
+﻿namespace KanbanBoard.Shared.Requests
 {
     /// <summary>
     /// Something that can be validated

@@ -1,6 +1,6 @@
 ﻿using KanbanBoard.Server.Data;
 using KanbanBoard.Server.Repositories.Interfaces;
-using KanbanBoard.Shared.Commands;
+using KanbanBoard.Shared.Requests;
 using Microsoft.EntityFrameworkCore;
 
 namespace KanbanBoard.Server.Repositories
@@ -31,7 +31,7 @@ namespace KanbanBoard.Server.Repositories
             await context.SaveChangesAsync(token);
         }
 
-        public async Task UpdateOrCreateTask(Guid id, UpdateOrCreateTaskCommand command, CancellationToken token)
+        public async Task UpdateOrCreateTask(Guid id, UpdateOrCreateTaskRequest command, CancellationToken token)
         {
             var task = await context.Tasks.FirstOrDefaultAsync(t => t.Id == id, token);
             if (task == default)

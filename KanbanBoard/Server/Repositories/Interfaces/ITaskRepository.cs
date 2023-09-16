@@ -1,4 +1,4 @@
-﻿using KanbanBoard.Shared.Commands;
+﻿using KanbanBoard.Shared.Requests;
 
 namespace KanbanBoard.Server.Repositories.Interfaces
 {
@@ -7,7 +7,7 @@ namespace KanbanBoard.Server.Repositories.Interfaces
         /// <summary>
         /// Patch task if it exists, create new if not. This can be separated, but for the assignment purpuse I left it combined.
         /// </summary>
-        Task UpdateOrCreateTask(Guid id, UpdateOrCreateTaskCommand command, CancellationToken token);
+        Task UpdateOrCreateTask(Guid id, UpdateOrCreateTaskRequest command, CancellationToken token);
 
         /// <summary>
         /// Move task to a new Stage

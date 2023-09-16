@@ -1,5 +1,5 @@
 ﻿using KanbanBoard.Shared;
-using KanbanBoard.Shared.Commands;
+using KanbanBoard.Shared.Requests;
 using System.Net.Http.Json;
 
 namespace KanbanBoard.Client.Services
@@ -11,6 +11,23 @@ namespace KanbanBoard.Client.Services
         public BoardsService(HttpClient httpClient) 
         {
             this.httpClient = httpClient;
+        }
+
+        public async Task<BoardDto> CreateBoard(string name)
+        {
+            var response = await httpClient.PostAsJsonAsync("api/board", new CreateBoardRequest { Name = name });
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new InvalidOperationException($"Cannot create new board");
+            }
+
+            var board = await response.Content.ReadFromJsonAsync<BoardDto>();
+            if (board == null)
+            {
+                throw new InvalidOperationException($"Cannot deserialize response");
+            }
+
+            return board;
         }
 
         public async Task DeleteStageAsync(Guid stageId)
@@ -30,7 +47,7 @@ namespace KanbanBoard.Client.Services
 
         public async Task MoveTaskToStageAsync(Guid id, Guid stageId)
         {
-            await httpClient.PostAsJsonAsync($"api/task/{id}/move", new MoveTaskCommand
+            await httpClient.PostAsJsonAsync($"api/task/{id}/move", new MoveTaskRequest
             {
                 NewStageId = stageId
             });
@@ -38,7 +55,7 @@ namespace KanbanBoard.Client.Services
 
         public async Task UpdateOrCreateStageAsync(Guid id, Guid boardId, string name)
         {
-            await httpClient.PatchAsJsonAsync($"api/stage/{id}", new UpdateOrCreateStageCommand
+            await httpClient.PatchAsJsonAsync($"api/stage/{id}", new UpdateOrCreateStageRequest
             {
                 BoardId = boardId,
                 Name = name,
@@ -47,7 +64,7 @@ namespace KanbanBoard.Client.Services
 
         public async Task UpdateOrCreateTaskAsync(Guid id, Guid stageId, Guid boardId, string title, string description)
         {
-            await httpClient.PatchAsJsonAsync($"api/task/{id}", new UpdateOrCreateTaskCommand 
+            await httpClient.PatchAsJsonAsync($"api/task/{id}", new UpdateOrCreateTaskRequest 
             {
                 StageId = stageId,
                 BoardId = boardId,

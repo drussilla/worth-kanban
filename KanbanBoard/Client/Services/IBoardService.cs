@@ -37,5 +37,11 @@ namespace KanbanBoard.Client.Services
         /// Update or Create Stage
         /// </summary>
         Task UpdateOrCreateStageAsync(Guid id, Guid boardId, string name);
+        
+        /// <summary>
+        /// Create new board with default name and stages
+        /// </summary>
+        /// <returns>Board DTO</returns>
+        Task<BoardDto> CreateBoard(string name);
     }
 }

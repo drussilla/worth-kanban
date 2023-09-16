@@ -6,6 +6,16 @@ namespace KanbanBoard.Client.Store.BoardUseCase
 
     public record FetchBoardsResultAction(IEnumerable<BoardDto> Boards);
 
-    public record SelectBoardAction(Guid Id);  
+    public record SelectBoardAction(Guid Id);
+
+    public record EditBoardAction(Guid Id);
+
+    public record CancelEditBoardAction(Guid Id);
+
+    public record SaveBoardAction(Guid Id, string Name);
+
+    public record AddBoardAction(string Name);
+
+    public record AddBoardResultAction(BoardDto Board);
 
 }

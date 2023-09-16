@@ -10,7 +10,7 @@ namespace KanbanBoard.Client.Store.TaskUseCase
         {
             var id = Guid.NewGuid();
             state.Boards[state.SelectedBoard!.Value].Stages[action.StageId].Tasks.Add(id, new TaskState(id, string.Empty, string.Empty, false, true));
-            return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard);
+            return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard, state.IsEditing);
         }
 
         [ReducerMethod]
@@ -40,7 +40,7 @@ namespace KanbanBoard.Client.Store.TaskUseCase
             // Move to new stage
             state.Boards[state.SelectedBoard!.Value].Stages[action.NewStageId].Tasks.Add(task.Id, task);
 
-            return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard);
+            return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard, state.IsEditing);
         }
 
         [ReducerMethod]
@@ -48,7 +48,7 @@ namespace KanbanBoard.Client.Store.TaskUseCase
         {
             var taskState = state.Boards[state.SelectedBoard!.Value].Stages[action.StageId].Tasks[action.TaskId];
             state.Boards[state.SelectedBoard!.Value].Stages[action.StageId].Tasks[action.TaskId] = new TaskState(taskState.Id, taskState.Title, taskState.Description, taskState.IsPersistent, true);
-            return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard);
+            return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard, state.IsEditing);
         }
 
         [ReducerMethod]
@@ -66,7 +66,7 @@ namespace KanbanBoard.Client.Store.TaskUseCase
                 state.Boards[state.SelectedBoard!.Value].Stages[action.StageId].Tasks.Remove(action.TaskId);
             }
             
-            return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard);
+            return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard, state.IsEditing);
         }
 
         [ReducerMethod]
@@ -74,7 +74,7 @@ namespace KanbanBoard.Client.Store.TaskUseCase
         {
             var taskState = state.Boards[state.SelectedBoard!.Value].Stages[action.StageId].Tasks[action.TaskId];
             state.Boards[state.SelectedBoard!.Value].Stages[action.StageId].Tasks[action.TaskId] = new TaskState(taskState.Id, action.Title, action.Description, taskState.IsPersistent, false);
-            return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard);
+            return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard, state.IsEditing);
         }
 
         [ReducerMethod]
@@ -82,14 +82,14 @@ namespace KanbanBoard.Client.Store.TaskUseCase
         {
             var taskState = state.Boards[state.SelectedBoard!.Value].Stages[action.StageId].Tasks[action.TaskId];
             state.Boards[state.SelectedBoard!.Value].Stages[action.StageId].Tasks[action.TaskId] = new TaskState(taskState.Id, taskState.Title, taskState.Description, true, false);
-            return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard);
+            return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard, state.IsEditing);
         }
 
         [ReducerMethod]
         public static BoardsState ReduceDeleteTaskAction(BoardsState state, DeleteTaskAction action)
         {
             state.Boards[state.SelectedBoard!.Value].Stages[action.StageId].Tasks.Remove(action.TaskId);
-            return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard);
+            return new(isLoading: state.IsLoading, boards: state.Boards, state.SelectedBoard, state.IsEditing);
         }
     }
 }

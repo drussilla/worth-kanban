@@ -27,12 +27,17 @@ else
             {
                 var link = $"board/{board.Id}";
                 <div class="nav-item px-3">
-
                     <NavLink class="nav-link" href="@link" Match="NavLinkMatch.All">
-                    <span class="oi oi-home" aria-hidden="true"></span> @board.Name
+                        <span class="oi oi-task" aria-hidden="true"></span> <span class="text-truncate mx-1">@board.Name</span>
                     </NavLink>
                 </div>
             }
+            <hr />
+            <div class="nav-item px-3">
+                <a href="#" @onclick="AddBoard" class="nav-link text-truncate">
+                    <span class="oi oi-plus" aria-hidden="true"></span> <span class="text-truncate mx-1">New Board</span>
+                </a>                    
+            </div>
         </nav>
         
     </div>
@@ -41,11 +46,11 @@ else
 
 
 @code {
-    
+
     [Inject]
     public IDispatcher Dispatcher { get; set; }
 
-    
+
     [Inject]
     private IState<BoardsState> BoardsState { get; set; }
 
@@ -53,5 +58,11 @@ else
     {
         base.OnInitialized();
         Dispatcher.Dispatch(new FetchBoardsAction());
+    }
+
+    private void AddBoard()
+    {
+        // Settng default name here, user can rename it after we created a board.
+        Dispatcher.Dispatch(new AddBoardAction("Create Board"));
     }
 }
