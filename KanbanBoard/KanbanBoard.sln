@@ -9,13 +9,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KanbanBoard.Client", "Clien
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KanbanBoard.Shared", "Shared\KanbanBoard.Shared.csproj", "{6FA9521C-4901-4313-9242-E4A9C1AC461B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KanbanBoard.Server.UnitTests", "KanbanBoard.Server.UnitTests\KanbanBoard.Server.UnitTests.csproj", "{0B99E56D-BB44-4F6C-A12F-5E0385C155D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KanbanBoard.Server.UnitTests", "Tests\KanbanBoard.Server.UnitTests\KanbanBoard.Server.UnitTests.csproj", "{0B99E56D-BB44-4F6C-A12F-5E0385C155D4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KanbanBoard.Client.UnitTests", "KanbanBoard.Client.UnitTests\KanbanBoard.Client.UnitTests.csproj", "{EBA931A5-71C0-439F-B8AA-B69EBB21E79D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KanbanBoard.Client.UnitTests", "Tests\KanbanBoard.Client.UnitTests\KanbanBoard.Client.UnitTests.csproj", "{EBA931A5-71C0-439F-B8AA-B69EBB21E79D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KanbanBoard.Client.ComponentTests", "KanbanBoard.Client.ComponentTests\KanbanBoard.Client.ComponentTests.csproj", "{40DDFF87-FFA4-4E78-A2F5-BD9D451440D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KanbanBoard.Client.ComponentTests", "Tests\KanbanBoard.Client.ComponentTests\KanbanBoard.Client.ComponentTests.csproj", "{40DDFF87-FFA4-4E78-A2F5-BD9D451440D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KanbanBoard.Server.IntergationTests", "KanbanBoard.Server.IntergationTests\KanbanBoard.Server.IntergationTests.csproj", "{E7BA4A62-0BD9-422A-B53A-E78AB86F7506}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KanbanBoard.Server.IntergationTests", "Tests\KanbanBoard.Server.IntergationTests\KanbanBoard.Server.IntergationTests.csproj", "{E7BA4A62-0BD9-422A-B53A-E78AB86F7506}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A14C9939-BB57-4EFF-9173-87C9E0983056}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,6 +56,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0B99E56D-BB44-4F6C-A12F-5E0385C155D4} = {A14C9939-BB57-4EFF-9173-87C9E0983056}
+		{EBA931A5-71C0-439F-B8AA-B69EBB21E79D} = {A14C9939-BB57-4EFF-9173-87C9E0983056}
+		{40DDFF87-FFA4-4E78-A2F5-BD9D451440D3} = {A14C9939-BB57-4EFF-9173-87C9E0983056}
+		{E7BA4A62-0BD9-422A-B53A-E78AB86F7506} = {A14C9939-BB57-4EFF-9173-87C9E0983056}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DB9BF7C5-119C-48C1-80AC-00A617E2574D}
