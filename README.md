@@ -1,3 +1,7 @@
+[![.NET](https://github.com/drussilla/worth-kanban/actions/workflows/dotnet.yml/badge.svg)](https://github.com/drussilla/worth-kanban/actions/workflows/dotnet.yml)
+
+Welcome to Ivan's test assignment!
+
 # Requirements
 
 ## Goal
@@ -34,11 +38,11 @@ during a second interview
 - [x] Initial project setup
 - [x] Setup test projects
 - [x] Task add/edit/delete/move
-- [ ] Stage management
-- [ ] Board management
+- [x] Stage management
+- [x] Board management
 - [ ] Add Docker support
-- [ ] Add GitHub CI integration
-- [ ] Add Production instructions
+- [x] Add GitHub CI integration
+- [x] Add Production instructions
 - [ ] Polishing UI and Backend
 
 # Assumptions, Design and Architecture
@@ -130,6 +134,12 @@ _Note_: I didn't include any end-to-end or performance tests since I had a limit
 
 # Production
 
+Even though this is a test assignment, this project could be adapted to a production use. What's need to be done:
+- Change Database configuration to use MS SQL Server (via `appsettings.json`)
+- Add APM and RUM to monitor application and user behaviour
+- Add Deployment scripts to support multiple environments (Dev, QA, Staging, Prod)
+- Add Terraform to have infrastructure as a code in the project
+
 # Future Impovements
 
 * Archive tasks/stages/boards
@@ -137,6 +147,7 @@ _Note_: I didn't include any end-to-end or performance tests since I had a limit
 * Add support for images, rich text, markdown
 * Add support for task reordering inside singe Stage
 * Add support for Stage reordering
+* Add uspport for Board reordering
 * Extend error handling logic
 * Extend logging
 
