@@ -15,9 +15,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KanbanBoard.Client.UnitTest
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KanbanBoard.Client.ComponentTests", "Tests\KanbanBoard.Client.ComponentTests\KanbanBoard.Client.ComponentTests.csproj", "{40DDFF87-FFA4-4E78-A2F5-BD9D451440D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KanbanBoard.Server.IntergationTests", "Tests\KanbanBoard.Server.IntergationTests\KanbanBoard.Server.IntergationTests.csproj", "{E7BA4A62-0BD9-422A-B53A-E78AB86F7506}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KanbanBoard.Server.IntergationTests", "Tests\KanbanBoard.Server.IntergationTests\KanbanBoard.Server.IntergationTests.csproj", "{E7BA4A62-0BD9-422A-B53A-E78AB86F7506}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A14C9939-BB57-4EFF-9173-87C9E0983056}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{250992E2-3FA8-4727-A062-7C80062FC02C}"
+	ProjectSection(SolutionItems) = preProject
+		..\.github\workflows\dotnet.yml = ..\.github\workflows\dotnet.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

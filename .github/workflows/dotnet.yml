@@ -1,5 +1,5 @@
 # This workflow will build and run tests for this app.
-# TODO: Add deployment jobs.
+# TODO: Add deployment jobs for production use.
 
 name: .NET
 
@@ -21,8 +21,8 @@ jobs:
       with:
         dotnet-version: 7.0.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore KanbanBoard/KanbanBoard.sln
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build KanbanBoard/KanbanBoard.sln --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test KanbanBoard/KanbanBoard.sln --no-build --verbosity normal
