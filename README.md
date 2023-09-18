@@ -93,13 +93,13 @@ during a second interview
 - Download and install SQL Server Express https://www.microsoft.com/en-us/sql-server/sql-server-downloads
 - Install git: https://git-scm.com/download
 - Clone this repo `git clone https://github.com/drussilla/worth-kanban.git`
-- Install dotnet-ef `dotnet tool install --global dotnet-ef` to create and database apply migrations
+- Install dotnet-ef `dotnet tool install --global dotnet-ef` to create and apply database migrations
 
 ## Build and Run
 
 Build by executing:
 ```
-dotnet build
+dotnet build .\KanbanBoard\KanbanBoard.sln
 ```
 
 You can just open Visual Studio or Rider and start `KanbanBoard.Server` project.
@@ -118,7 +118,7 @@ and open `https://localhost:7185` in the browser
 
 All tests are written in C# and using Moq framework to mock dependencies and test subjects in isolation.
 
-Since I had a limited time implmeneting this assignment, I didn't want to achive 100% coverage with test, main goal is to validate critical pathes and show general approach to testing in this solution. Test should be expanded further more for production scenarios.
+Since I had a limited time implmeneting this assignment, I didn't want to achive 100% coverage with tests, main goal is to validate critical pathes and show general approach to testing in this solution. Test should be expanded further more for production scenarios.
 
 **Test projects**
 * KanbanBoard.Server.UnitTests - Backend unit tests 
