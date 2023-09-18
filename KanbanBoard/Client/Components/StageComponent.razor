@@ -31,8 +31,8 @@
                 </Dropzone>
             }
 
-            <button class="btn btn-primary" disabled="@Stage.IsEditing" @onclick="AddTask">Add Task</button>
-            <button class="btn btn-danger" title="You can only delete empty Stages" disabled="@(Stage?.Tasks.Values.Count != 0 || Stage.IsEditing)" @onclick="DeleteStage">Delete Stage</button>
+            <button class="btn btn-primary" disabled="@Stage.IsEditing" @onclick="AddTask"><span class="oi oi-plus" aria-hidden="true"></span></button>
+            <button class="btn btn-danger" title="You can only delete empty Stages" disabled="@(Stage?.Tasks.Values.Count != 0 || Stage.IsEditing)" @onclick="DeleteStage"><span class="oi oi-trash" aria-hidden="true"></span></button>
         </div>
     </div>
 </div>
